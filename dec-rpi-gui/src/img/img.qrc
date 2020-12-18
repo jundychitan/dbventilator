@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="logo">
+    <file>ascende_superius_logo.png</file>
+    <file>spiritus_vitae_logo.png</file>
+  </qresource>
+</RCC>
