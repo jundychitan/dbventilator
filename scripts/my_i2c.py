@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding:utf-8 -*-
 from __future__ import print_function
 import smbus
@@ -53,6 +53,17 @@ def main():
     bus = smbus.SMBus(1)
     sampling_time = 0
     start = time.time()
+
+    inhilation_start = False
+    exhilation_start = False
+
+    start_inhilation_time = time.time()
+    end_inhilation_time = time.time()
+    total_inhilation_time = 0
+    start_exhilation_time = time.time()
+    end_exhilation_time = time.time()
+    total_exhilation_time = 0
+
     vt = 0
     slpm = 0
     inhilation = 0
@@ -60,47 +71,27 @@ def main():
     oxygen = 0
     battery = 0
     prev_slpm = 0
-    
+    peep_pressure = 0
+    peep_counter = 0
+    max_pressure = 0
+    pressure_range = tuple()
     channel = 2
     gain = 1	
     while True:
-        #read honeywell sensor
-        try:
-            flow = bus.read_byte(flow_address)<<8 | bus.read_byte(flow_address)
-            slpm = 50 * ((flow / 16384.0) - 0.1) / 0.8;
-            f = open("/mnt/ramdisk/flow.txt","w")
-            f.write("%1.3f" %(slpm))
-            f.close()
-            sampling_time = (time.time()-start)*1000.0
-            start = time.time()
-            if slpm<0:slpm=0
-            if slpm>0:
-                vt += ((slpm / 60) / (1 / (sampling_time / 1000.0))) * 1000;
-            else:
-                vt = 0
-            f = open("/mnt/ramdisk/volume.txt","w")
-            f.write("%1.3f" %(vt))
-            f.close()
-            
-        except:
-            f = open("error.txt","w")
-            f.write("%1.3f\r\n" %(slpm))
-            f.close()
-            print("ERROR")
-            pass
-            
         inhilation=INHILATION.voltage
         if inhilation<0.5:inhilation=0.5
         inhilation = map_value(inhilation, 0.5, 4.5, -2.0, 2.0)
+        inhilation = kpa_cmh2o(inhilation)
         f = open("/mnt/ramdisk/inhilation.txt","w")
         f.write("%1.3f" %(inhilation))
         f.close()
-        	
+            
         pressure=PRESSURE.voltage
         if pressure<0.5:
             pressure=0.5
         pressure = map_value(pressure, 0.5, 4.5, 0, 5)
         pressure = kpa_cmh2o(pressure)
+        pressure_range = pressure_range + (pressure,)
         f = open("/mnt/ramdisk/pressure.txt","w")
         f.write("%1.3f" %(pressure))
         f.close()
@@ -115,8 +106,76 @@ def main():
         f = open("/mnt/ramdisk/battery.txt","w")
         f.write("%1.3f" %(battery))
         f.close()
-        
-        print("Values: SLPM: %1.3f, INH %1.3f, PRES %1.3f, OXY %1.3f, BATT %1.3f, VT %1.3f " %(slpm,inhilation,pressure,oxygen,battery, vt))
+
+        #read honeywell sensor
+        try:
+            flow = bus.read_byte(flow_address)<<8 | bus.read_byte(flow_address)
+            slpm = 50 * ((flow / 16384.0) - 0.1) / 0.8;
+            f = open("/mnt/ramdisk/flow.txt","w")
+            f.write("%1.3f" %(slpm))
+            f.close()
+            sampling_time = (time.time()-start)*1000.0
+            start = time.time()
+            if slpm<0:slpm=0
+            if slpm>0:
+                peep_counter = 0                
+                if inhilation_start == False:
+                    #print ("start inhilation")
+                    inhilation_start = True
+                    exhilation_start = False
+                    start_inhilation_time = time.time()
+
+                if inhilation_start == True and exhilation_start == True:
+                    total_exhilation_time = time.time() - start_exhilation_time
+                    #print ("Inhilation: %0.1f" %(total_inhilation_time))
+                    #print ("Exhilation: %0.1f" %(total_exhilation_time))
+                    f = open("/mnt/ramdisk/inh_time.txt","w")
+                    f.write("%0.1f" %(total_inhilation_time))
+                    f.close()
+                    f = open("/mnt/ramdisk/exh_time.txt","w")
+                    f.write("%0.1f" %(total_exhilation_time))
+                    f.close()
+                    inhilation_start = False
+                    exhilation_start = False
+
+                vt += ((slpm / 60) / (1 / (sampling_time / 1000.0))) * 1000;
+            else:
+                if exhilation_start == False:
+                    #print ("start_exhilation")
+                    exhilation_start = True
+                    start_exhilation_time = time.time()
+                    total_inhilation_time = time.time() - start_inhilation_time
+
+                peep_counter += 1
+                if peep_counter == 5:
+                    peep_pressure = pressure
+                    print("PEEP: %0.1f" %(peep_pressure))
+                    max_pressure = max(pressure_range)
+                    print("Max pressure: %0.1f" %(max_pressure))
+                    #reset tuple
+                    pressure_range = tuple()
+
+                    f = open("/mnt/ramdisk/peep_pressure.txt","w")
+                    f.write("%0.1f" %(peep_pressure))
+                    f.close()
+                    f = open("/mnt/ramdisk/max_pressure.txt","w")
+                    f.write("%0.1f" %(max_pressure))
+                    f.close()                    
+
+                vt = 0
+
+            f = open("/mnt/ramdisk/volume.txt","w")
+            f.write("%1.3f" %(vt))
+            f.close()
+            
+        except:
+            f = open("error.txt","w")
+            f.write("%1.3f\r\n" %(slpm))
+            f.close()
+            print("ERROR")
+            pass
+                    
+        #print("Values: SLPM: %1.3f, INH %1.3f, PRES %1.3f, OXY %1.3f, BATT %1.3f, VT %1.3f " %(slpm,inhilation,pressure,oxygen,battery, vt))
         #sys.stdout.flush()
         #print("Values: SLPM: %1.3f, INH %1.3f" %(slpm,inhilation))
         time.sleep(0.1)

@@ -7,7 +7,7 @@ import sys
 from timeit import default_timer as timer
 
 file_path="/mnt/ramdisk/inhilation.txt"
-target_value=0.1
+target_value=0.4
 
 def get_value():
 	try:
@@ -35,14 +35,25 @@ def get_operation():
 		f.close()
 		return value
 	except:
-		return "off"        
+		return "off"       
+
+def get_limit():
+    try:
+        f=open("/home/pi/dbventilator/dec-rpi-gui/temp/assist_pressure.txt","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        return target_value    
 		
 def main():
     while True:
         if get_mode() ==  "assist" and get_operation() == "on":
             value=get_value()
-            #print("value %1.3f" %(value))
-            if value>target_value:
+            limit=get_limit()
+            print("value %1.3f" %(value))
+            print("limit %1.3f" %(limit))
+            if value>limit:
                 print("Assist mode")
                 ser=serial.Serial(port='/dev/ttyS0',baudrate=9600,parity=serial.PARITY_NONE,stopbits=serial.STOPBITS_ONE,bytesize=serial.EIGHTBITS,timeout=1)
                 ser.write("1\r")
