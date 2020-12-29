@@ -1,6 +1,6 @@
 #!/bin/bash
 serial_port="/dev/ttyS0"
-project_dir=/home/pi/dec-rpi-gui/temp
+project_dir=/home/pi/dbventilator/dec-rpi-gui/temp
 config_file=process_control.txt
 tidal_volume_file=tidal_volume.txt
 resp_rate_file=resp_rate.txt

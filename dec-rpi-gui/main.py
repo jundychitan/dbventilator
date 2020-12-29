@@ -61,10 +61,10 @@ class Main(QMainWindow, Ui_MainWindow):
         self.process_pool.append(volume_sensor)
 
     def start_process(self):
-        with open('/home/pi/dec-rpi-gui/temp/process_control.txt', 'w') as f: f.write("on")
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/process_control.txt', 'w') as f: f.write("on")
 
     def stop_process(self):
-        with open('/home/pi/dec-rpi-gui/temp/process_control.txt', 'w') as f: f.write("off")
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/process_control.txt', 'w') as f: f.write("off")
 
     def show_Settings(self):
         self.window = QMainWindow()
@@ -74,19 +74,19 @@ class Main(QMainWindow, Ui_MainWindow):
         self.window.showFullScreen()
         self.form_settingsProperties.btn_save_changes.clicked.connect(self.save_settings)
 
-        with open('/home/pi/dec-rpi-gui/temp/mode.txt', 'r') as f: self.form_settingsProperties.cmb_mode.setCurrentText(f.read().title())
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/mode.txt', 'r') as f: self.form_settingsProperties.cmb_mode.setCurrentText(f.read().title())
 
-        with open('/home/pi/dec-rpi-gui/temp/tidal_volume.txt', 'r') as f: self.form_settingsProperties.txt_volume.setValue(int(f.read()))
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/tidal_volume.txt', 'r') as f: self.form_settingsProperties.txt_volume.setValue(int(f.read()))
 
-        with open('/home/pi/dec-rpi-gui/temp/resp_rate.txt', 'r') as f: self.form_settingsProperties.txt_resp_rate.setValue(int(f.read()))
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/resp_rate.txt', 'r') as f: self.form_settingsProperties.txt_resp_rate.setValue(int(f.read()))
 
-        with open('/home/pi/dec-rpi-gui/temp/ie_ratio.txt', 'r') as f: self.form_settingsProperties.txt_ieratio.setValue(int(f.read()))
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/ie_ratio.txt', 'r') as f: self.form_settingsProperties.txt_ieratio.setValue(int(f.read()))
 
-        with open('/home/pi/dec-rpi-gui/temp/peak_flow.txt', 'r') as f: self.form_settingsProperties.txt_flow.setValue(int(f.read()))
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/peak_flow.txt', 'r') as f: self.form_settingsProperties.txt_flow.setValue(int(f.read()))
 
-        with open('/home/pi/dec-rpi-gui/temp/peep.txt', 'r') as f: self.form_settingsProperties.txt_peep.setValue(int(f.read()))
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/peep.txt', 'r') as f: self.form_settingsProperties.txt_peep.setValue(int(f.read()))
 
-        with open('/home/pi/dec-rpi-gui/temp/fio2.txt', 'r') as f: self.form_settingsProperties.txt_fio2.setValue(int(f.read()))
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/fio2.txt', 'r') as f: self.form_settingsProperties.txt_fio2.setValue(int(f.read()))
 
         self.window.show()
 
@@ -99,41 +99,41 @@ class Main(QMainWindow, Ui_MainWindow):
         peep = str(self.form_settingsProperties.txt_peep.text())
         fio2 = str(self.form_settingsProperties.txt_fio2.text()).replace('%', '')
 
-        with open('/home/pi/dec-rpi-gui/temp/mode.txt', 'w') as f: f.write(mode)
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/mode.txt', 'w') as f: f.write(mode)
 
-        with open('/home/pi/dec-rpi-gui/temp/tidal_volume.txt', 'w') as f: f.write(volume)
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/tidal_volume.txt', 'w') as f: f.write(volume)
 
-        with open('/home/pi/dec-rpi-gui/temp/resp_rate.txt', 'w') as f: f.write(resp_rate)
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/resp_rate.txt', 'w') as f: f.write(resp_rate)
 
-        with open('/home/pi/dec-rpi-gui/temp/ie_ratio.txt', 'w') as f: f.write(ieratio)
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/ie_ratio.txt', 'w') as f: f.write(ieratio)
 
-        with open('/home/pi/dec-rpi-gui/temp/peak_flow.txt', 'w') as f: f.write(flow)
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/peak_flow.txt', 'w') as f: f.write(flow)
 
-        with open('/home/pi/dec-rpi-gui/temp/peep.txt', 'w') as f: f.write(peep)
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/peep.txt', 'w') as f: f.write(peep)
 
-        with open('/home/pi/dec-rpi-gui/temp/fio2.txt', 'w') as f: f.write(fio2)
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/fio2.txt', 'w') as f: f.write(fio2)
 
         self.refresh_display()
         self.window.close()
 
     def refresh_display(self):
-        with open('/home/pi/dec-rpi-gui/temp/mode.txt', 'r') as f: self.lbl_mode.setText(f.read().title())
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/mode.txt', 'r') as f: self.lbl_mode.setText(f.read().title())
 
-        with open('/home/pi/dec-rpi-gui/temp/tidal_volume.txt', 'r') as f: self.lbl_tidal_volume.setText(f'{f.read()} mL')
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/tidal_volume.txt', 'r') as f: self.lbl_tidal_volume.setText(f'{f.read()} mL')
 
-        with open('/home/pi/dec-rpi-gui/temp/resp_rate.txt', 'r') as f: self.lbl_resp_rate.setText(f'{f.read()} BPM')
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/resp_rate.txt', 'r') as f: self.lbl_resp_rate.setText(f'{f.read()} BPM')
 
-        with open('/home/pi/dec-rpi-gui/temp/ie_ratio.txt', 'r') as f: self.lbl_ieratio.setText(f'1:{f.read()}')
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/ie_ratio.txt', 'r') as f: self.lbl_ieratio.setText(f'1:{f.read()}')
 
-        with open('/home/pi/dec-rpi-gui/temp/peak_flow.txt', 'r') as f: self.lbl_flow.setText(f'{f.read()} Lpm')
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/peak_flow.txt', 'r') as f: self.lbl_flow.setText(f'{f.read()} Lpm')
 
-        with open('/home/pi/dec-rpi-gui/temp/peep.txt', 'r') as f: self.lbl_peep.setText(f'{f.read()} cmH2O')
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/peep.txt', 'r') as f: self.lbl_peep.setText(f'{f.read()} cmH2O')
 
-        with open('/home/pi/dec-rpi-gui/temp/fio2.txt', 'r') as f: self.lbl_fio2.setText(f'{f.read()}%')
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/fio2.txt', 'r') as f: self.lbl_fio2.setText(f'{f.read()}%')
 
-        with open('/home/pi/dec-rpi-gui/temp/pressure_peak.txt', 'r') as f: self.lbl_pressure_peak.setText(f'{f.read()} cmH2O')
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/pressure_peak.txt', 'r') as f: self.lbl_pressure_peak.setText(f'{f.read()} cmH2O')
 
-        with open('/home/pi/dec-rpi-gui/temp/p_plateau.txt', 'r') as f: self.lbl_p_plateau.setText(f'{f.read()} cmH2O')
+        with open('/home/pi/dbventilator/dec-rpi-gui/temp/p_plateau.txt', 'r') as f: self.lbl_p_plateau.setText(f'{f.read()} cmH2O')
         
     @pyqtSlot(list)
     def pressure_listener(self, pressure_stack):
