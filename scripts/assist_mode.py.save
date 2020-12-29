@@ -14,7 +14,7 @@ def get_value():
 		f=open(file_path,"r")
 		value=float(f.read())
 		f.close()
-		#print(value)
+		print(value)
 		return value
 	except:
 		return 0
@@ -24,24 +24,17 @@ def get_mode():
 		f=open("/home/pi/dbventilator/dec-rpi-gui/temp/mode.txt","r")
 		value=f.read()
 		f.close()
+		print(value)
 		return value
 	except:
+		print("file not found")
 		return "assist"
-        
-def get_operation():
-	try:
-		f=open("/home/pi/dbventilator/dec-rpi-gui/temp/process_control.txt","r")
-		value=f.read()
-		f.close()
-		return value
-	except:
-		return "off"        
 		
 def main():
     while True:
-        if get_mode() ==  "assist" and get_operation() == "on":
+        if get_mode() ==  "assist":
             value=get_value()
-            #print("value %1.3f" %(value))
+            print("value %1.3f" %(value))
             if value>target_value:
                 print("Assist mode")
                 ser=serial.Serial(port='/dev/ttyS0',baudrate=9600,parity=serial.PARITY_NONE,stopbits=serial.STOPBITS_ONE,bytesize=serial.EIGHTBITS,timeout=1)
@@ -50,7 +43,7 @@ def main():
                 time.sleep(1)
             else:
                 time.sleep (0.2)
-        else:
+	selse:
 		time.sleep (1)
 
 if __name__ == "__main__":
