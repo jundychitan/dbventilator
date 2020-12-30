@@ -6,7 +6,10 @@ import sys
 """
     Get environment setting
 """
-def env(parameter):
+def env(parameter, entry=False):
+    if entry:
+        parameter = "ENTRY_"+parameter
+    
     with open(join(abspath(dirname(realpath(__file__))),'config.env'), 'r') as env_file:
         environment_array = env_file.read().split("\n")
         for param in environment_array:

@@ -11,6 +11,7 @@ import settings as form_settings
 from helper import *
 from pyqtgraph import *
 import time
+import math
 
 
 class Main(QMainWindow, Ui_MainWindow):
@@ -68,10 +69,6 @@ class Main(QMainWindow, Ui_MainWindow):
         volume_sensor.start()
         self.process_pool.append(volume_sensor)
 
-        # Thread for semi-realtime gui update !Note: dont add on process pool(for sensors only)
-        #display_refresh_th = QThread(target=self.realtime_refresh_display, name="GUI Update")
-        #display_refresh_th.start()
-
         peak_pressure = Sensor(self)
         peak_pressure.setup()
         peak_pressure.set_path(env("PEAK_PRESSURE_PATH"))
@@ -103,13 +100,25 @@ class Main(QMainWindow, Ui_MainWindow):
         th_alarm_status.result_callback.connect(self.th_alarm_status_listener)
         th_alarm_status.start()
         self.process_pool.append(th_alarm_status)
-        """
-        with open(env("PEAK_PRESSURE_PATH"), 'r') as f: self.lbl_pressure_peak.setText(f'{f.read()}')
-            with open(env("P_PLATEAU_PATH"), 'r') as f: self.lbl_p_plateau.setText(f'{f.read()}')
 
-            with open(env("ALARM_COLOR_PATH"), 'r') as f: self.alarm_color.setStyleSheet("border-radius: 3px;\nbackground-color: rgb("+f.read()+");")
-            with open(env("ALARM_STATUS_PATH"), 'r') as f: self.alarm_status.setText(f'{f.read()}')
-        """
+        th_uptime = Sensor(self)
+        th_uptime.setup()
+        th_uptime.set_path(env("UPTIME_PATH"))
+        th_uptime.for_timestamp(True)
+        th_uptime.set_recording(False)
+        th_uptime.freeze()
+        th_uptime.set_name("uptime")
+        th_uptime.result_callback.connect(self.th_uptime_listener)
+        th_uptime.start()
+        self.process_pool.append(th_uptime)
+
+        th_entry_update = Sensor(self)
+        th_entry_update.setup()
+        th_entry_update.as_proceedure()
+        th_entry_update.result_callback.connect(self.th_entry_update_listener)
+        th_entry_update.start()
+        self.process_pool.append(th_entry_update)
+        
 
 
     def run_process(self):
@@ -124,9 +133,18 @@ class Main(QMainWindow, Ui_MainWindow):
 
     def start_process(self):
         with open(env("PROCESS_CONTROL_PATH"), 'w+') as f: f.write("on")
+        for proc in self.process_pool:
+            if proc.get_name()=="uptime":
+                proc.unfreeze()
+                break
+        
 
     def stop_process(self):
         with open(env("PROCESS_CONTROL_PATH"), 'w+') as f: f.write("off")
+        for proc in self.process_pool:
+            if proc.get_name()=="uptime":
+                proc.freeze()
+                break
 
     def show_Settings(self):
         self.window = QMainWindow()
@@ -196,12 +214,16 @@ class Main(QMainWindow, Ui_MainWindow):
 
     def refresh_display(self):
         with open(env("MODE_PATH"), 'r') as f: self.lbl_mode.setText(f.read().title())
-        with open(env("TIDAL_PATH"), 'r') as f: self.lbl_tidal_volume.setText(f'{f.read()}')
+        with open(env("TIDAL_PATH", entry=True), 'r') as f: self.lbl_tidal_volume.setText(f'{f.read()}')
         with open(env("RESP_RATE_PATH"), 'r') as f: self.lbl_resp_rate.setText(f'{f.read()}')
         with open(env("IERATIO_PATH"), 'r') as f: self.lbl_ieratio.setText(f'1:{f.read()}')
-        with open(env("PEAK_FLOW_PATH"), 'r') as f: self.lbl_flow.setText(f'{f.read()}')
-        with open(env("PEEP_PATH"), 'r') as f: self.lbl_peep.setText(f'{f.read()}')
+        with open(env("PEAK_FLOW_PATH", entry=True), 'r') as f: self.lbl_flow.setText(f'{f.read()}')
+        with open(env("PEEP_PATH", entry=True), 'r') as f: self.lbl_peep.setText(f'{f.read()}')
         with open(env("FIO2_PATH"), 'r') as f: self.lbl_fio2.setText(f'{f.read()}%')
+
+    @pyqtSlot(object, object)
+    def th_entry_update_listener(self, **args):
+        self.refresh_display()
         
     @pyqtSlot(object, object)
     def pressure_listener(self, pressure_stack, time_stack):
@@ -234,6 +256,16 @@ class Main(QMainWindow, Ui_MainWindow):
     @pyqtSlot(object, object)
     def th_alarm_status_listener(self, reading, other):
         self.alarm_status.setText(reading)
+
+    @pyqtSlot(object, object)
+    def th_uptime_listener(self, reading, other):
+        total_seconds = reading/2
+        hours = int(total_seconds/3600.0)
+        total_seconds -= hours*3600.0
+        minutes = int(total_seconds/60.0)
+        total_seconds -= minutes*60.0
+        seconds = total_seconds
+        self.lbl_runtime.setText(f'{int(hours):02.0f}:{int(minutes):02.0f}:{int(seconds):02.0f}')
 
     def closeEvent(self, event):
         for process in self.process_pool:

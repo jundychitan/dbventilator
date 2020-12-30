@@ -23,6 +23,15 @@ def gui_directory():
 def realtime_directory():
     return '/mnt/ramdisk/'
 
+def get_red():
+    return '255,0,0'
+
+def get_green():
+    return '0,255,0'
+
+def get_yellow():
+    return '255,255,0'
+
 def get_process_control():
     try:
         f=open(gui_directory()+"process_control.txt","r")
@@ -177,9 +186,32 @@ def main():
     peep_pressure = 0
     peep_counter = 0
     max_pressure = 0
+    max_flow = 0
+    max_volume = 0
     pressure_range = tuple()
+    flow_range = tuple()
+    volume_range = tuple()
     channel = 2
     gain = 1	
+
+    run_once = False
+
+    f = open(realtime_directory()+'pressure_peak.txt','w')
+    f.write("0")
+    f.close()
+
+    f = open(realtime_directory()+'volume_peak.txt','w')
+    f.write("0")
+    f.close()
+
+    f = open(realtime_directory()+'flow_peak.txt','w')
+    f.write("0")
+    f.close()
+
+    f = open(realtime_directory()+'max_peep.txt','w')
+    f.write("0")
+    f.close()    
+
     while True:
         inhilation=INHILATION.voltage
         if inhilation<0.5:inhilation=0.5
@@ -221,6 +253,7 @@ def main():
             start = time.time()
             if slpm<0:slpm=0
             if slpm>0:
+                run_once = False
                 peep_counter = 0                
                 if inhilation_start == False:
                     #print ("start inhilation")
@@ -242,6 +275,9 @@ def main():
                     exhilation_start = False
 
                 vt += ((slpm / 60) / (1 / (sampling_time / 1000.0))) * 1000;
+                flow_range = flow_range + (slpm,)
+                volume_range = volume_range + (vt,)
+
             else:
                 if exhilation_start == False:
                     #print ("start_exhilation")
@@ -250,35 +286,111 @@ def main():
                     total_inhilation_time = time.time() - start_inhilation_time
 
                 peep_counter += 1
-                if peep_counter == 5:
-                    if get_process_control() == "on":
+                if peep_counter == 5:   
+                    #peep_counter = 0                 
+                    if get_process_control() == "on":      
+                        run_once = False                  
                         peep_pressure = pressure
+                        f = open(realtime_directory()+'max_peep.txt','w')
+                        f.write("%0.1f" %(peep_pressure))
+                        f.close()
+
+
                         #print("PEEP: %0.1f" %(peep_pressure))
                         max_pressure = max(pressure_range)
+                        max_flow = max(flow_range)
+                        max_volume = max(volume_range)
+
+                        f = open(realtime_directory()+'pressure_peak.txt','w')
+                        f.write("%0.1f" %(max_pressure))
+                        f.close()
+
+                        f = open(realtime_directory()+'volume_peak.txt','w')
+                        f.write("%0.1f" %(max_volume))
+                        f.close()
+
+                        f = open(realtime_directory()+'flow_peak.txt','w')
+                        f.write("%0.1f" %(max_flow))
+                        f.close()
                         #print("Max pressure: %0.1f" %(max_pressure))
                         #reset tuple
                         pressure_range = tuple()
+                        flow_range = tuple()
+                        volume_range = tuple()
 
                         #evaluate peep and pressure limits
                         if max_pressure < get_pressure_lo_lim() and peep_pressure < get_peep_lo_lim():
                             print("Circuit Fault Alarm")
-                        else:
+                            #set alarm to critical color
+                            f=open(gui_directory()+'alarm_color.txt','w')
+                            f.write("%s" %(get_red()))
+                            f.close()
+
+                            f=open(gui_directory()+'alarm_status.txt','w')
+                            f.write("CKT FAULT")
+                            f.close()                            
+
+                        else: 
                             if max_pressure > get_pressure_hi_lim():
                                 print("High Pressure Alarm: %0.1f" %(max_pressure))
+                                f=open(gui_directory()+'alarm_color.txt','w')
+                                f.write("%s" %(get_red()))
+                                f.close()     
 
-                            if peep_pressure > get_peep_hi_lim():
-                                print("High PEEP Alarm %0.1f" %(peep_pressure))                            
+                                f=open(gui_directory()+'alarm_status.txt','w')
+                                f.write("HIGH cmH2O")
+                                f.close()          
 
-                            if peep_pressure < get_peep_lo_lim():
+
+                            elif peep_pressure > get_peep_hi_lim():
+                                print("Max PEEP Alarm %0.1f" %(peep_pressure))  
+                                f=open(gui_directory()+'alarm_color.txt','w')
+                                f.write("%s" %(get_red()))
+                                f.close()   
+
+                                f=open(gui_directory()+'alarm_status.txt','w')
+                                f.write("HIGH PEEP")
+                                f.close()  
+
+                            elif peep_pressure < get_peep_lo_lim():
                                 print("Low PEEP Alarm %0.1f" %(peep_pressure))
+                                f=open(gui_directory()+'alarm_color.txt','w')
+                                f.write("%s" %(get_red()))
+                                f.close()        
 
-                        f = open(realtime_directory()+"peep_pressure.txt","w")
-                        f.write("%0.1f" %(peep_pressure))
-                        f.close()
+                                f=open(gui_directory()+'alarm_status.txt','w')
+                                f.write("LOW PEEP")
+                                f.close()  
 
-                        f = open(realtime_directory()+"max_pressure.txt","w")
-                        f.write("%0.1f" %(max_pressure))
-                        f.close()                    
+                            else:
+                                print("Normal")
+                                f=open(gui_directory()+'alarm_color.txt','w')
+                                f.write("%s" %(get_green()))
+                                f.close()   
+
+                                f=open(gui_directory()+'alarm_status.txt','w')
+                                f.write("NORMAL")
+                                f.close()                           
+
+
+                        # f = open(realtime_directory()+"peep_pressure.txt","w")
+                        # f.write("%0.1f" %(peep_pressure))
+                        # f.close()
+
+                        # f = open(realtime_directory()+"max_pressure.txt","w")
+                        # f.write("%0.1f" %(max_pressure))
+                        # f.close()                    
+                    else:
+                        if run_once == False:
+                            run_once = True
+                            print("Stopped")
+                            f=open(gui_directory()+'alarm_color.txt','w')
+                            f.write("%s" %(get_green()))
+                            f.close()   
+
+                            f=open(gui_directory()+'alarm_status.txt','w')
+                            f.write("STOPPED")
+                            f.close()                             
 
                 vt = 0
 
