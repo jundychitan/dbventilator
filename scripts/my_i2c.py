@@ -328,7 +328,11 @@ def main():
 
                             f=open(gui_directory()+'alarm_status.txt','w')
                             f.write("CKT FAULT")
-                            f.close()                            
+                            f.close()   
+
+                            f = open(realtime_directory()+'beep','w')
+                            f.write("1")
+                            f.close()                         
 
                         else: 
                             if max_pressure > get_pressure_hi_lim():
@@ -339,7 +343,11 @@ def main():
 
                                 f=open(gui_directory()+'alarm_status.txt','w')
                                 f.write("HIGH cmH2O")
-                                f.close()          
+                                f.close()
+
+                                f = open(realtime_directory()+'beep','w')
+                                f.write("1")
+                                f.close()         
 
 
                             elif peep_pressure > get_peep_hi_lim():
@@ -352,6 +360,10 @@ def main():
                                 f.write("HIGH PEEP")
                                 f.close()  
 
+                                f = open(realtime_directory()+'beep','w')
+                                f.write("1")
+                                f.close()
+
                             elif peep_pressure < get_peep_lo_lim():
                                 print("Low PEEP Alarm %0.1f" %(peep_pressure))
                                 f=open(gui_directory()+'alarm_color.txt','w')
@@ -362,6 +374,10 @@ def main():
                                 f.write("LOW PEEP")
                                 f.close()  
 
+                                f = open(realtime_directory()+'beep','w')
+                                f.write("1")
+                                f.close()
+
                             else:
                                 print("Normal")
                                 f=open(gui_directory()+'alarm_color.txt','w')
@@ -370,7 +386,11 @@ def main():
 
                                 f=open(gui_directory()+'alarm_status.txt','w')
                                 f.write("NORMAL")
-                                f.close()                           
+                                f.close()  
+
+                                f = open(realtime_directory()+'beep','w')
+                                f.write("0")
+                                f.close()                         
 
 
                         # f = open(realtime_directory()+"peep_pressure.txt","w")
