@@ -6,239 +6,730 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>772</width>
-    <height>328</height>
+    <width>723</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SETTINGS</string>
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(20, 33, 61);</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
     <item>
-     <widget class="QFrame" name="frame">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="labelAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+      <property name="horizontalSpacing">
+       <number>60</number>
       </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+      <property name="verticalSpacing">
+       <number>0</number>
       </property>
-      <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Mode</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="cmb_mode">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Mode</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>50</number>
+        </property>
+        <property name="leftMargin">
+         <number>50</number>
+        </property>
+        <property name="rightMargin">
+         <number>50</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="btn_assist">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(229, 229, 229);</string>
+          </property>
           <property name="text">
            <string>Assist</string>
           </property>
-         </item>
-         <item>
+          <property name="icon">
+           <iconset resource="../src/images.qrc">
+            <normaloff>:/buttons/img/iconfinder_Inkcontober_United_2730360.png</normaloff>:/buttons/img/iconfinder_Inkcontober_United_2730360.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_control">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(229, 229, 229);</string>
+          </property>
           <property name="text">
            <string>Control</string>
           </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Tidal Volume</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="txt_volume">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="suffix">
-          <string>mL</string>
-         </property>
-         <property name="minimum">
-          <number>250</number>
-         </property>
-         <property name="maximum">
-          <number>800</number>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Respiratory Rate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="txt_resp_rate">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="suffix">
-          <string> Breath/min</string>
-         </property>
-         <property name="minimum">
-          <number>10</number>
-         </property>
-         <property name="maximum">
-          <number>30</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="text">
-          <string>I:E Ratio</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="txt_ieratio">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>3</number>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Peak Flow</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="txt_flow">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="suffix">
-          <string> Lpm</string>
-         </property>
-         <property name="minimum">
-          <number>10</number>
-         </property>
-         <property name="maximum">
-          <number>50</number>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="text">
-          <string>PEEP</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QSpinBox" name="txt_peep">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="maximum">
-          <number>10</number>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="text">
-          <string>FiO2</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QSpinBox" name="txt_fio2">
-         <property name="styleSheet">
-          <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot;;</string>
-         </property>
-         <property name="suffix">
-          <string>%</string>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QFrame" name="frame_2">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>490</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_save_changes">
-            <property name="text">
-             <string>Save Changes</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+          <property name="icon">
+           <iconset resource="../src/images.qrc">
+            <normaloff>:/buttons/img/iconfinder_intellectual-brain-intelligent-guru-sage-pundit_3790079.png</normaloff>:/buttons/img/iconfinder_intellectual-brain-intelligent-guru-sage-pundit_3790079.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Segoe UI&quot;;
+margin-top: 15px;</string>
+        </property>
+        <property name="text">
+         <string>Tidal Volume</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QSpinBox" name="txt_tidal_volume">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(229, 229, 229);
+font: 75 11pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="frame">
+           <bool>false</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="showGroupSeparator" stdset="0">
+           <bool>false</bool>
+          </property>
+          <property name="suffix">
+           <string> mL</string>
+          </property>
+          <property name="minimum">
+           <number>250</number>
+          </property>
+          <property name="maximum">
+           <number>800</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDial" name="dial_tidal_volume">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>250</number>
+          </property>
+          <property name="maximum">
+           <number>800</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Segoe UI&quot;;
+margin-top: 15px;</string>
+        </property>
+        <property name="text">
+         <string>Respiratory Rate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QSpinBox" name="txt_resprate">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(229, 229, 229);
+font: 75 11pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="suffix">
+           <string> Bpm</string>
+          </property>
+          <property name="minimum">
+           <number>10</number>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDial" name="dial">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>10</number>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Segoe UI&quot;;
+margin-top: 15px;</string>
+        </property>
+        <property name="text">
+         <string>I:E Ratio</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QSpinBox" name="txt_ieratio">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(229, 229, 229);
+font: 75 11pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="suffix">
+           <string/>
+          </property>
+          <property name="prefix">
+           <string>1:</string>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>3</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDial" name="dial_2">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>3</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Segoe UI&quot;;
+margin-top: 15px;</string>
+        </property>
+        <property name="text">
+         <string>Peak Flow</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QSpinBox" name="txt_peakflow">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(229, 229, 229);
+font: 75 11pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="suffix">
+           <string> Lpm</string>
+          </property>
+          <property name="minimum">
+           <number>10</number>
+          </property>
+          <property name="maximum">
+           <number>50</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDial" name="dial_3">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>10</number>
+          </property>
+          <property name="maximum">
+           <number>50</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Segoe UI&quot;;
+margin-top: 15px;</string>
+        </property>
+        <property name="text">
+         <string>PEEP</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QSpinBox" name="txt_peep">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(229, 229, 229);
+font: 75 11pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="suffix">
+           <string> cmH2O</string>
+          </property>
+          <property name="maximum">
+           <number>10</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDial" name="dial_4">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>10</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Segoe UI&quot;;
+margin-top: 15px;</string>
+        </property>
+        <property name="text">
+         <string>FiO2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QSpinBox" name="txt_fio2">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(229, 229, 229);
+font: 75 11pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="suffix">
+           <string> %</string>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDial" name="dial_5">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="7" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="frame">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_save">
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(229, 229, 229);
+border-radius: 10px;</string>
+          </property>
+          <property name="text">
+           <string>Save Changes</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../src/images.qrc">
+            <normaloff>:/buttons/img/iconfinder_sign-check_299110.png</normaloff>:/buttons/img/iconfinder_sign-check_299110.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
  </widget>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../src/images.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>dial_tidal_volume</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>txt_tidal_volume</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>610</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>341</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txt_tidal_volume</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>dial_tidal_volume</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>658</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>txt_resprate</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>646</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txt_resprate</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>dial</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>268</x>
+     <y>139</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>643</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txt_ieratio</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>dial_2</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>305</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>612</x>
+     <y>222</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>txt_ieratio</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>640</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>txt_peakflow</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>634</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txt_peakflow</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>dial_3</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>301</x>
+     <y>288</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>592</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>txt_peep</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>627</x>
+     <y>369</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>506</x>
+     <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txt_peep</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>dial_4</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>459</x>
+     <y>361</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>601</x>
+     <y>374</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_5</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>txt_fio2</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>628</x>
+     <y>438</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>431</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txt_fio2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>dial_5</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>452</x>
+     <y>434</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>606</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

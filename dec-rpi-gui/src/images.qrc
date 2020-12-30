@@ -3,4 +3,11 @@
     <file>img/ascende_superius_logo.png</file>
     <file>img/spiritus_vitae_logo.png</file>
   </qresource>
+  <qresource prefix="buttons">
+    <file>img/iconfinder_intellectual-brain-intelligent-guru-sage-pundit_3790079.png</file>
+    <file>img/iconfinder_Inkcontober_United_2730360.png</file>
+    <file>img/iconfinder_sign-check_299110.png</file>
+    <file>img/iconfinder_Configuration-01_1976051.png</file>
+    <file>img/btn_play.png</file>
+  </qresource>
 </RCC>
