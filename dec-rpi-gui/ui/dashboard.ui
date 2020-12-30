@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>950</width>
-    <height>882</height>
+    <width>764</width>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>16777215</height>
+        <height>40</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -77,6 +77,9 @@
          </property>
          <property name="frameShadow">
           <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>1</number>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="spacing">
@@ -148,11 +151,23 @@ color: rgb(255, 255, 255);</string>
           <enum>QFrame::Plain</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="leftMargin">
+           <number>9</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="label_2">
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -216,14 +231,14 @@ color: rgb(255, 255, 255);</string>
            <widget class="QPushButton" name="btn_run">
             <property name="maximumSize">
              <size>
-              <width>40</width>
-              <height>40</height>
+              <width>35</width>
+              <height>35</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 25 11.5pt &quot;Segoe UI Light&quot;;
 color: rgb(255, 255, 255);
-border-radius: 18px;
+border-radius: 15px;
 background-color: rgb(0, 170, 127);</string>
             </property>
             <property name="text">
@@ -254,14 +269,14 @@ background-color: rgb(0, 170, 127);</string>
            <widget class="QPushButton" name="btn_settings">
             <property name="maximumSize">
              <size>
-              <width>40</width>
-              <height>40</height>
+              <width>35</width>
+              <height>35</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 25 11.5pt &quot;Segoe UI Light&quot;;
 color: rgb(255, 255, 255);
-border-radius: 18px;
+border-radius: 15px;
 background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="text">
@@ -469,7 +484,7 @@ background-color: rgb(252, 163, 17);</string>
              <item>
               <widget class="QLabel" name="label_13">
                <property name="styleSheet">
-                <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+                <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
                </property>
                <property name="text">
                 <string>Peak Pressure(cmH2O)</string>
@@ -488,7 +503,7 @@ background-color: rgb(252, 163, 17);</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+                <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
                </property>
@@ -528,7 +543,7 @@ background-color: rgb(252, 163, 17);</string>
              <item>
               <widget class="QLabel" name="label_15">
                <property name="styleSheet">
-                <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+                <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
                </property>
                <property name="text">
                 <string>P Plateau(cmH2O)</string>
@@ -541,7 +556,7 @@ background-color: rgb(252, 163, 17);</string>
              <item>
               <widget class="QLabel" name="lbl_p_plateau">
                <property name="styleSheet">
-                <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+                <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
                </property>
@@ -578,7 +593,7 @@ background-color: rgb(252, 163, 17);</string>
              <item>
               <widget class="QLabel" name="label_17">
                <property name="styleSheet">
-                <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+                <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
                </property>
                <property name="text">
                 <string>PEEP(cmH2O)</string>
@@ -591,7 +606,7 @@ background-color: rgb(252, 163, 17);</string>
              <item>
               <widget class="QLabel" name="lbl_peep">
                <property name="styleSheet">
-                <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+                <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
                </property>
@@ -628,7 +643,7 @@ background-color: rgb(252, 163, 17);</string>
              <item>
               <widget class="QLabel" name="label_19">
                <property name="styleSheet">
-                <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+                <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
                </property>
                <property name="text">
                 <string>Flow(Lpm)</string>
@@ -641,7 +656,7 @@ background-color: rgb(252, 163, 17);</string>
              <item>
               <widget class="QLabel" name="lbl_flow">
                <property name="styleSheet">
-                <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+                <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
                </property>
@@ -691,7 +706,7 @@ background-color: rgb(252, 163, 17);</string>
              <item>
               <widget class="QLabel" name="lbl_tidal_volume">
                <property name="styleSheet">
-                <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+                <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
                </property>
@@ -746,7 +761,7 @@ background-color: #E5E5E5;</string>
         <number>5</number>
        </property>
        <item>
-        <widget class="QFrame" name="frame_4">
+        <widget class="QFrame" name="alarm_color">
          <property name="maximumSize">
           <size>
            <width>150</width>
@@ -767,7 +782,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="label_3">
             <property name="styleSheet">
-             <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+             <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
             </property>
             <property name="text">
              <string>Alarm</string>
@@ -778,9 +793,9 @@ background-color: rgb(252, 163, 17);</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_4">
+           <widget class="QLabel" name="alarm_status">
             <property name="styleSheet">
-             <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+             <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
             </property>
@@ -817,7 +832,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="label_5">
             <property name="styleSheet">
-             <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+             <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
             </property>
             <property name="text">
              <string>Mode</string>
@@ -830,7 +845,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="lbl_mode">
             <property name="styleSheet">
-             <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+             <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
             </property>
@@ -867,7 +882,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="label_7">
             <property name="styleSheet">
-             <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+             <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
             </property>
             <property name="text">
              <string>FiO2</string>
@@ -880,7 +895,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="lbl_fio2">
             <property name="styleSheet">
-             <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+             <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
             </property>
@@ -917,7 +932,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="label_9">
             <property name="styleSheet">
-             <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+             <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
             </property>
             <property name="text">
              <string>f(BPM)</string>
@@ -930,7 +945,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="lbl_resp_rate">
             <property name="styleSheet">
-             <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+             <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
             </property>
@@ -967,7 +982,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="label_11">
             <property name="styleSheet">
-             <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;</string>
+             <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
             </property>
             <property name="text">
              <string>I:E</string>
@@ -980,7 +995,7 @@ background-color: rgb(252, 163, 17);</string>
           <item>
            <widget class="QLabel" name="lbl_ieratio">
             <property name="styleSheet">
-             <string notr="true">font: 25 20pt &quot;Segoe UI Light&quot; bold;
+             <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
 background-color: #E5E5E5;</string>
             </property>

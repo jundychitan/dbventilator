@@ -11,7 +11,133 @@ import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
+def limits_directory():
+    return '/home/pi/dbventilator/scripts/limits/'
 
+def working_directory():
+    return '/home/pi/dbventilator/scripts/'
+
+def gui_directory():
+    return '/home/pi/dbventilator/dec-rpi-gui/temp/'
+
+def realtime_directory():
+    return '/mnt/ramdisk/'
+
+def get_process_control():
+    try:
+        f=open(gui_directory()+"process_control.txt","r")
+        value=f.read()
+        f.close()
+        return value 
+    except:
+        return "off"
+
+def get_pressure_hi_lim():
+    try:
+        f=open(limits_directory()+"get_pressure_hi_lim","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        print("get pressure limit error")
+        value=40.0
+        f=open(limits_directory()+"get_pressure_hi_lim","w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value
+
+def get_pressure_lo_lim():
+    try:
+        f=open(limits_directory()+"get_pressure_hi_lim","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        value=5
+        f=open(limits_directory()+"get_pressure_hi_lim","w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value        
+
+def get_peep_hi_lim():
+    try:
+        f=open(limits_directory()+"get_peep_hi_lim","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        value=10
+        f=open(limits_directory()+"get_peep_hi_lim","w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value           
+
+def get_peep_lo_lim():
+    try:
+        f=open(limits_directory()+"get_peep_lo_lim","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        value=1
+        f=open(limits_directory()+"get_peep_lo_lim","w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value          
+    
+def get_volume_hi_lim():
+    try:
+        f=open(limits_directory()+"get_volume_hi_lim","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        value=800
+        f=open(limits_directory()+"get_volume_hi_lim","w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value                
+
+def get_volume_lo_lim():
+    try:
+        f=open(limits_directory()+"get_volume_lo_lim","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        value=10
+        f=open(limits_directory()+"get_volume_lo_lim","w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value           
+
+def get_battery_50pcnt():
+    try:
+        f=open(limits_directory()+"get_battery_50pcnt","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        value=12
+        f=open(limits_directory()+"get_battery_50pcnt","w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value     
+
+def get_battery_20pcnt():
+    return value
+    try:
+        f=open(limits_directory()+"get_battery_20pcnt","r")
+        value=float(f.read())
+        f.close()
+        return value
+    except:
+        value=11.5
+        f=open(limits_directory()+"get_battery_20pcnt","w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value                  
+    
 def map_value(x, in_min, in_max, out_min, out_max):
     return float((x-in_min) * (out_max-out_min) / (in_max-in_min) + out_min)
 
@@ -26,29 +152,6 @@ def main():
     INHILATION = AnalogIn(ads, ADS.P2)
     BATTERY = AnalogIn(ads, ADS.P3)
     
-    #ad_address = 0x48
-    # A0 = 0x40
-    # A1 = 0x41
-    # A2 = 0x42
-    # A3 = 0x43
-
-    #fletch's setup
-    # OXYGEN=0
-    # PRESSURE=1 #ok
-    # INHILATION=2
-    # BATTERY=3 #ok
-
-    #OXYGEN=A0
-    #PRESSURE=A1
-    #INHILATION=A2
-    #BATTERY=A3
-
-    #jun's setup
-    #OXYGEN=A2
-    #PRESSURE=A1
-    #INHILATION=A0
-    #BATTERY=A3
-
     flow_address=0x49
     bus = smbus.SMBus(1)
     sampling_time = 0
@@ -92,18 +195,18 @@ def main():
         pressure = map_value(pressure, 0.5, 4.5, 0, 5)
         pressure = kpa_cmh2o(pressure)
         pressure_range = pressure_range + (pressure,)
-        f = open("/mnt/ramdisk/pressure.txt","w")
+        f = open(realtime_directory()+"pressure.txt","w")
         f.write("%1.3f" %(pressure))
         f.close()
         
         oxygen=OXYGEN.voltage
-        f = open("/mnt/ramdisk/oxygen.txt","w")
+        f = open(realtime_directory()+"oxygen.txt","w")
         f.write("%1.3f" %(oxygen))
         f.close()
         
         battery=BATTERY.voltage
         battery = map_value(battery, 0, 4.1, 0, 13.47)
-        f = open("/mnt/ramdisk/battery.txt","w")
+        f = open(realtime_directory()+"battery.txt","w")
         f.write("%1.3f" %(battery))
         f.close()
 
@@ -111,7 +214,7 @@ def main():
         try:
             flow = bus.read_byte(flow_address)<<8 | bus.read_byte(flow_address)
             slpm = 50 * ((flow / 16384.0) - 0.1) / 0.8;
-            f = open("/mnt/ramdisk/flow.txt","w")
+            f = open(realtime_directory()+"flow.txt","w")
             f.write("%1.3f" %(slpm))
             f.close()
             sampling_time = (time.time()-start)*1000.0
@@ -129,10 +232,10 @@ def main():
                     total_exhilation_time = time.time() - start_exhilation_time
                     #print ("Inhilation: %0.1f" %(total_inhilation_time))
                     #print ("Exhilation: %0.1f" %(total_exhilation_time))
-                    f = open("/mnt/ramdisk/inh_time.txt","w")
+                    f = open(realtime_directory()+"inh_time.txt","w")
                     f.write("%0.1f" %(total_inhilation_time))
                     f.close()
-                    f = open("/mnt/ramdisk/exh_time.txt","w")
+                    f = open(realtime_directory()+"exh_time.txt","w")
                     f.write("%0.1f" %(total_exhilation_time))
                     f.close()
                     inhilation_start = False
@@ -148,23 +251,38 @@ def main():
 
                 peep_counter += 1
                 if peep_counter == 5:
-                    peep_pressure = pressure
-                    print("PEEP: %0.1f" %(peep_pressure))
-                    max_pressure = max(pressure_range)
-                    print("Max pressure: %0.1f" %(max_pressure))
-                    #reset tuple
-                    pressure_range = tuple()
+                    if get_process_control() == "on":
+                        peep_pressure = pressure
+                        #print("PEEP: %0.1f" %(peep_pressure))
+                        max_pressure = max(pressure_range)
+                        #print("Max pressure: %0.1f" %(max_pressure))
+                        #reset tuple
+                        pressure_range = tuple()
 
-                    f = open("/mnt/ramdisk/peep_pressure.txt","w")
-                    f.write("%0.1f" %(peep_pressure))
-                    f.close()
-                    f = open("/mnt/ramdisk/max_pressure.txt","w")
-                    f.write("%0.1f" %(max_pressure))
-                    f.close()                    
+                        #evaluate peep and pressure limits
+                        if max_pressure < get_pressure_lo_lim() and peep_pressure < get_peep_lo_lim():
+                            print("Circuit Fault Alarm")
+                        else:
+                            if max_pressure > get_pressure_hi_lim():
+                                print("High Pressure Alarm: %0.1f" %(max_pressure))
+
+                            if peep_pressure > get_peep_hi_lim():
+                                print("High PEEP Alarm %0.1f" %(peep_pressure))                            
+
+                            if peep_pressure < get_peep_lo_lim():
+                                print("Low PEEP Alarm %0.1f" %(peep_pressure))
+
+                        f = open(realtime_directory()+"peep_pressure.txt","w")
+                        f.write("%0.1f" %(peep_pressure))
+                        f.close()
+
+                        f = open(realtime_directory()+"max_pressure.txt","w")
+                        f.write("%0.1f" %(max_pressure))
+                        f.close()                    
 
                 vt = 0
 
-            f = open("/mnt/ramdisk/volume.txt","w")
+            f = open(realtime_directory()+"volume.txt","w")
             f.write("%1.3f" %(vt))
             f.close()
             

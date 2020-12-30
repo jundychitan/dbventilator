@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(950, 882)
+        MainWindow.resize(764, 525)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.top_frame = QtWidgets.QFrame(self.centralwidget)
-        self.top_frame.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.top_frame.setMaximumSize(QtCore.QSize(16777215, 40))
         self.top_frame.setStyleSheet("background-color: rgb(20, 33, 61);")
         self.top_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.top_frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -36,6 +36,7 @@ class Ui_MainWindow(object):
         self.frame.setStyleSheet("border-color: rgb(0, 0, 0);")
         self.frame.setFrameShape(QtWidgets.QFrame.Box)
         self.frame.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.frame.setLineWidth(1)
         self.frame.setObjectName("frame")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.frame)
         self.horizontalLayout_3.setContentsMargins(9, 0, 0, 0)
@@ -64,9 +65,10 @@ class Ui_MainWindow(object):
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Plain)
         self.frame_2.setObjectName("frame_2")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.frame_2)
+        self.horizontalLayout_4.setContentsMargins(9, 0, 0, 0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_2 = QtWidgets.QLabel(self.frame_2)
-        self.label_2.setMaximumSize(QtCore.QSize(80, 16777215))
+        self.label_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.label_2.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;\n"
 "color: rgb(255, 255, 255);")
         self.label_2.setObjectName("label_2")
@@ -88,10 +90,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.btn_run = QtWidgets.QPushButton(self.frame_3)
-        self.btn_run.setMaximumSize(QtCore.QSize(40, 40))
+        self.btn_run.setMaximumSize(QtCore.QSize(35, 35))
         self.btn_run.setStyleSheet("font: 25 11.5pt \"Segoe UI Light\";\n"
 "color: rgb(255, 255, 255);\n"
-"border-radius: 18px;\n"
+"border-radius: 15px;\n"
 "background-color: rgb(0, 170, 127);")
         self.btn_run.setText("")
         icon = QtGui.QIcon()
@@ -104,10 +106,10 @@ class Ui_MainWindow(object):
         self.btn_run.setObjectName("btn_run")
         self.horizontalLayout_5.addWidget(self.btn_run)
         self.btn_settings = QtWidgets.QPushButton(self.frame_3)
-        self.btn_settings.setMaximumSize(QtCore.QSize(40, 40))
+        self.btn_settings.setMaximumSize(QtCore.QSize(35, 35))
         self.btn_settings.setStyleSheet("font: 25 11.5pt \"Segoe UI Light\";\n"
 "color: rgb(255, 255, 255);\n"
-"border-radius: 18px;\n"
+"border-radius: 15px;\n"
 "background-color: rgb(255, 255, 255);")
         self.btn_settings.setText("")
         icon1 = QtGui.QIcon()
@@ -141,7 +143,7 @@ class Ui_MainWindow(object):
         self.gv_pressure.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.gv_pressure.setFrameShape(QtWidgets.QFrame.Box)
         self.gv_pressure.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.gv_pressure.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.gv_pressure.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
         brush = QtGui.QBrush(QtGui.QColor(252, 163, 17))
         brush.setStyle(QtCore.Qt.NoBrush)
         self.gv_pressure.setForegroundBrush(brush)
@@ -150,7 +152,7 @@ class Ui_MainWindow(object):
         self.gv_flow = PlotWidget(self.graph_display_frame)
         self.gv_flow.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.gv_flow.setFrameShape(QtWidgets.QFrame.Box)
-        self.gv_flow.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.gv_flow.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
         brush = QtGui.QBrush(QtGui.QColor(252, 163, 17))
         brush.setStyle(QtCore.Qt.NoBrush)
         self.gv_flow.setForegroundBrush(brush)
@@ -159,7 +161,7 @@ class Ui_MainWindow(object):
         self.gv_volume = PlotWidget(self.graph_display_frame)
         self.gv_volume.setStyleSheet("background-color: rgb(0, 0, 0);")
         self.gv_volume.setFrameShape(QtWidgets.QFrame.Box)
-        self.gv_volume.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.gv_volume.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
         brush = QtGui.QBrush(QtGui.QColor(252, 163, 17))
         brush.setStyle(QtCore.Qt.NoBrush)
         self.gv_volume.setForegroundBrush(brush)
@@ -186,13 +188,13 @@ class Ui_MainWindow(object):
         self.verticalLayout_8.setSpacing(6)
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.label_13 = QtWidgets.QLabel(self.frame_12)
-        self.label_13.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_13.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_13.setAlignment(QtCore.Qt.AlignCenter)
         self.label_13.setObjectName("label_13")
         self.verticalLayout_8.addWidget(self.label_13)
         self.lbl_pressure_peak = QtWidgets.QLabel(self.frame_12)
         self.lbl_pressure_peak.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.lbl_pressure_peak.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_pressure_peak.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_pressure_peak.setAlignment(QtCore.Qt.AlignCenter)
@@ -209,12 +211,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.frame_9)
         self.verticalLayout_9.setObjectName("verticalLayout_9")
         self.label_15 = QtWidgets.QLabel(self.frame_9)
-        self.label_15.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_15.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_15.setAlignment(QtCore.Qt.AlignCenter)
         self.label_15.setObjectName("label_15")
         self.verticalLayout_9.addWidget(self.label_15)
         self.lbl_p_plateau = QtWidgets.QLabel(self.frame_9)
-        self.lbl_p_plateau.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_p_plateau.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_p_plateau.setAlignment(QtCore.Qt.AlignCenter)
@@ -231,12 +233,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.frame_13)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
         self.label_17 = QtWidgets.QLabel(self.frame_13)
-        self.label_17.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_17.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_17.setAlignment(QtCore.Qt.AlignCenter)
         self.label_17.setObjectName("label_17")
         self.verticalLayout_10.addWidget(self.label_17)
         self.lbl_peep = QtWidgets.QLabel(self.frame_13)
-        self.lbl_peep.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_peep.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_peep.setAlignment(QtCore.Qt.AlignCenter)
@@ -253,12 +255,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.frame_10)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.label_19 = QtWidgets.QLabel(self.frame_10)
-        self.label_19.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_19.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_19.setAlignment(QtCore.Qt.AlignCenter)
         self.label_19.setObjectName("label_19")
         self.verticalLayout_11.addWidget(self.label_19)
         self.lbl_flow = QtWidgets.QLabel(self.frame_10)
-        self.lbl_flow.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_flow.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_flow.setAlignment(QtCore.Qt.AlignCenter)
@@ -280,7 +282,7 @@ class Ui_MainWindow(object):
         self.label_21.setObjectName("label_21")
         self.verticalLayout_12.addWidget(self.label_21)
         self.lbl_tidal_volume = QtWidgets.QLabel(self.frame_11)
-        self.lbl_tidal_volume.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_tidal_volume.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_tidal_volume.setAlignment(QtCore.Qt.AlignCenter)
@@ -299,28 +301,28 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_6.setSpacing(5)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.frame_4 = QtWidgets.QFrame(self.bottom_frame)
-        self.frame_4.setMaximumSize(QtCore.QSize(150, 16777215))
-        self.frame_4.setStyleSheet("border-radius: 3px;\n"
+        self.alarm_color = QtWidgets.QFrame(self.bottom_frame)
+        self.alarm_color.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.alarm_color.setStyleSheet("border-radius: 3px;\n"
 "background-color: rgb(252, 163, 17);")
-        self.frame_4.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_4.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.frame_4.setObjectName("frame_4")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame_4)
+        self.alarm_color.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.alarm_color.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.alarm_color.setObjectName("alarm_color")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.alarm_color)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.label_3 = QtWidgets.QLabel(self.frame_4)
-        self.label_3.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_3 = QtWidgets.QLabel(self.alarm_color)
+        self.label_3.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.verticalLayout_3.addWidget(self.label_3)
-        self.label_4 = QtWidgets.QLabel(self.frame_4)
-        self.label_4.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.alarm_status = QtWidgets.QLabel(self.alarm_color)
+        self.alarm_status.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
-        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_4.setObjectName("label_4")
-        self.verticalLayout_3.addWidget(self.label_4)
-        self.horizontalLayout_6.addWidget(self.frame_4)
+        self.alarm_status.setAlignment(QtCore.Qt.AlignCenter)
+        self.alarm_status.setObjectName("alarm_status")
+        self.verticalLayout_3.addWidget(self.alarm_status)
+        self.horizontalLayout_6.addWidget(self.alarm_color)
         self.frame_5 = QtWidgets.QFrame(self.bottom_frame)
         self.frame_5.setMaximumSize(QtCore.QSize(150, 16777215))
         self.frame_5.setStyleSheet("border-radius: 3px;\n"
@@ -331,12 +333,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.frame_5)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.label_5 = QtWidgets.QLabel(self.frame_5)
-        self.label_5.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_5.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")
         self.verticalLayout_4.addWidget(self.label_5)
         self.lbl_mode = QtWidgets.QLabel(self.frame_5)
-        self.lbl_mode.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_mode.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_mode.setAlignment(QtCore.Qt.AlignCenter)
@@ -353,12 +355,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.frame_6)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.label_7 = QtWidgets.QLabel(self.frame_6)
-        self.label_7.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_7.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_7.setAlignment(QtCore.Qt.AlignCenter)
         self.label_7.setObjectName("label_7")
         self.verticalLayout_5.addWidget(self.label_7)
         self.lbl_fio2 = QtWidgets.QLabel(self.frame_6)
-        self.lbl_fio2.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_fio2.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_fio2.setAlignment(QtCore.Qt.AlignCenter)
@@ -375,12 +377,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.frame_7)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.label_9 = QtWidgets.QLabel(self.frame_7)
-        self.label_9.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_9.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_9.setAlignment(QtCore.Qt.AlignCenter)
         self.label_9.setObjectName("label_9")
         self.verticalLayout_6.addWidget(self.label_9)
         self.lbl_resp_rate = QtWidgets.QLabel(self.frame_7)
-        self.lbl_resp_rate.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_resp_rate.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_resp_rate.setAlignment(QtCore.Qt.AlignCenter)
@@ -397,12 +399,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.frame_8)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.label_11 = QtWidgets.QLabel(self.frame_8)
-        self.label_11.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;")
+        self.label_11.setStyleSheet("font: 25 10pt \"Segoe UI Light\" bold;")
         self.label_11.setAlignment(QtCore.Qt.AlignCenter)
         self.label_11.setObjectName("label_11")
         self.verticalLayout_7.addWidget(self.label_11)
         self.lbl_ieratio = QtWidgets.QLabel(self.frame_8)
-        self.lbl_ieratio.setStyleSheet("font: 25 20pt \"Segoe UI Light\" bold;\n"
+        self.lbl_ieratio.setStyleSheet("font: 25 14pt \"Segoe UI Light\" bold;\n"
 "border-radius: 5px;\n"
 "background-color: #E5E5E5;")
         self.lbl_ieratio.setAlignment(QtCore.Qt.AlignCenter)
@@ -433,7 +435,7 @@ class Ui_MainWindow(object):
         self.label_21.setText(_translate("MainWindow", "V(mL)"))
         self.lbl_tidal_volume.setText(_translate("MainWindow", "500"))
         self.label_3.setText(_translate("MainWindow", "Alarm"))
-        self.label_4.setText(_translate("MainWindow", "--"))
+        self.alarm_status.setText(_translate("MainWindow", "--"))
         self.label_5.setText(_translate("MainWindow", "Mode"))
         self.lbl_mode.setText(_translate("MainWindow", "Assist"))
         self.label_7.setText(_translate("MainWindow", "FiO2"))

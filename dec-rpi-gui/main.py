@@ -10,6 +10,7 @@ from sensor import *
 import settings as form_settings
 from helper import *
 from pyqtgraph import *
+import time
 
 
 class Main(QMainWindow, Ui_MainWindow):
@@ -29,7 +30,7 @@ class Main(QMainWindow, Ui_MainWindow):
         # Graph Elements
         self.gv_pressure.setLabels(left='Pressure')
         self.gv_pressure.setAntialiasing(True)
-        self.gv_pressure.setRange(yRange=[0,45])
+        self.gv_pressure.setRange(yRange=[0,15])
         self.gv_pressure.setMouseEnabled(x=False, y=False)
         self.gv_pressure
 
@@ -66,6 +67,50 @@ class Main(QMainWindow, Ui_MainWindow):
         volume_sensor.result_callback.connect(self.volume_listener)
         volume_sensor.start()
         self.process_pool.append(volume_sensor)
+
+        # Thread for semi-realtime gui update !Note: dont add on process pool(for sensors only)
+        #display_refresh_th = QThread(target=self.realtime_refresh_display, name="GUI Update")
+        #display_refresh_th.start()
+
+        peak_pressure = Sensor(self)
+        peak_pressure.setup()
+        peak_pressure.set_path(env("PEAK_PRESSURE_PATH"))
+        peak_pressure.set_recording(False)
+        peak_pressure.result_callback.connect(self.peak_pressure_listener)
+        peak_pressure.start()
+        self.process_pool.append(peak_pressure)
+
+        p_plateau = Sensor(self)
+        p_plateau.setup()
+        p_plateau.set_path(env("P_PLATEAU_PATH"))
+        p_plateau.set_recording(False)
+        p_plateau.result_callback.connect(self.p_plateau_listener)
+        p_plateau.start()
+        self.process_pool.append(p_plateau)
+
+        th_alarm_color = Sensor(self)
+        th_alarm_color.setup()
+        th_alarm_color.set_path(env("ALARM_COLOR_PATH"))
+        th_alarm_color.set_recording(False)
+        th_alarm_color.result_callback.connect(self.th_alarm_color_listener)
+        th_alarm_color.start()
+        self.process_pool.append(th_alarm_color)
+
+        th_alarm_status = Sensor(self)
+        th_alarm_status.setup()
+        th_alarm_status.set_path(env("ALARM_STATUS_PATH"))
+        th_alarm_status.set_recording(False)
+        th_alarm_status.result_callback.connect(self.th_alarm_status_listener)
+        th_alarm_status.start()
+        self.process_pool.append(th_alarm_status)
+        """
+        with open(env("PEAK_PRESSURE_PATH"), 'r') as f: self.lbl_pressure_peak.setText(f'{f.read()}')
+            with open(env("P_PLATEAU_PATH"), 'r') as f: self.lbl_p_plateau.setText(f'{f.read()}')
+
+            with open(env("ALARM_COLOR_PATH"), 'r') as f: self.alarm_color.setStyleSheet("border-radius: 3px;\nbackground-color: rgb("+f.read()+");")
+            with open(env("ALARM_STATUS_PATH"), 'r') as f: self.alarm_status.setText(f'{f.read()}')
+        """
+
 
     def run_process(self):
         if self.running==0:
@@ -157,24 +202,38 @@ class Main(QMainWindow, Ui_MainWindow):
         with open(env("PEAK_FLOW_PATH"), 'r') as f: self.lbl_flow.setText(f'{f.read()}')
         with open(env("PEEP_PATH"), 'r') as f: self.lbl_peep.setText(f'{f.read()}')
         with open(env("FIO2_PATH"), 'r') as f: self.lbl_fio2.setText(f'{f.read()}%')
-        with open(env("PEAK_PRESSURE_PATH"), 'r') as f: self.lbl_pressure_peak.setText(f'{f.read()}')
-        with open(env("P_PLATEAU_PATH"), 'r') as f: self.lbl_p_plateau.setText(f'{f.read()}')
         
-    @pyqtSlot(list, list)
+    @pyqtSlot(object, object)
     def pressure_listener(self, pressure_stack, time_stack):
         self.gv_pressure.clear()
 
         self.gv_pressure.plot(x=time_stack, y=pressure_stack, pen=mkPen(color=(252, 163, 17)))
 
-    @pyqtSlot(list, list)
+    @pyqtSlot(object, object)
     def flow_listener(self, flow_stack, time_stack):
         self.gv_flow.clear()
         self.gv_flow.plot(x=time_stack, y=flow_stack, pen=mkPen(color=(252, 163, 17)))
 
-    @pyqtSlot(list, list)
+    @pyqtSlot(object, object)
     def volume_listener(self, volume_stack, time_stack):
         self.gv_volume.clear()
         self.gv_volume.plot(x=time_stack, y=volume_stack, pen=mkPen(color=(252, 163, 17)))
+
+    @pyqtSlot(object, object)
+    def peak_pressure_listener(self, reading, other):
+        self.lbl_pressure_peak.setText(f'{reading}')
+
+    @pyqtSlot(object, object)
+    def p_plateau_listener(self, reading, other):
+        self.lbl_p_plateau.setText(reading)
+
+    @pyqtSlot(object, object)
+    def th_alarm_color_listener(self, reading, other):
+        self.alarm_color.setStyleSheet("border-radius: 3px;\nbackground-color: rgb("+reading+");")
+
+    @pyqtSlot(object, object)
+    def th_alarm_status_listener(self, reading, other):
+        self.alarm_status.setText(reading)
 
     def closeEvent(self, event):
         for process in self.process_pool:

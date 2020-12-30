@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>723</width>
-    <height>590</height>
+    <width>837</width>
+    <height>695</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,7 +48,7 @@
        <number>60</number>
       </property>
       <property name="verticalSpacing">
-       <number>0</number>
+       <number>20</number>
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
@@ -136,7 +136,7 @@ font: 75 11pt &quot;Segoe UI&quot;;
 margin-top: 15px;</string>
         </property>
         <property name="text">
-         <string>Tidal Volume</string>
+         <string>Tidal Volume(mL)</string>
         </property>
        </widget>
       </item>
@@ -164,23 +164,7 @@ font: 75 11pt &quot;Segoe UI&quot;;</string>
            <bool>false</bool>
           </property>
           <property name="suffix">
-           <string> mL</string>
-          </property>
-          <property name="minimum">
-           <number>250</number>
-          </property>
-          <property name="maximum">
-           <number>800</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDial" name="dial_tidal_volume">
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>70</height>
-           </size>
+           <string/>
           </property>
           <property name="minimum">
            <number>250</number>
@@ -200,7 +184,7 @@ font: 75 11pt &quot;Segoe UI&quot;;
 margin-top: 15px;</string>
         </property>
         <property name="text">
-         <string>Respiratory Rate</string>
+         <string>Respiratory Rate(BPM)</string>
         </property>
        </widget>
       </item>
@@ -222,23 +206,7 @@ font: 75 11pt &quot;Segoe UI&quot;;</string>
            <set>Qt::AlignCenter</set>
           </property>
           <property name="suffix">
-           <string> Bpm</string>
-          </property>
-          <property name="minimum">
-           <number>10</number>
-          </property>
-          <property name="maximum">
-           <number>30</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDial" name="dial">
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>70</height>
-           </size>
+           <string/>
           </property>
           <property name="minimum">
            <number>10</number>
@@ -293,22 +261,6 @@ font: 75 11pt &quot;Segoe UI&quot;;</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QDial" name="dial_2">
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>70</height>
-           </size>
-          </property>
-          <property name="minimum">
-           <number>1</number>
-          </property>
-          <property name="maximum">
-           <number>3</number>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item row="4" column="0">
@@ -319,7 +271,7 @@ font: 75 11pt &quot;Segoe UI&quot;;
 margin-top: 15px;</string>
         </property>
         <property name="text">
-         <string>Peak Flow</string>
+         <string>Peak Flow(Lpm)</string>
         </property>
        </widget>
       </item>
@@ -341,23 +293,7 @@ font: 75 11pt &quot;Segoe UI&quot;;</string>
            <set>Qt::AlignCenter</set>
           </property>
           <property name="suffix">
-           <string> Lpm</string>
-          </property>
-          <property name="minimum">
-           <number>10</number>
-          </property>
-          <property name="maximum">
-           <number>50</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDial" name="dial_3">
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>70</height>
-           </size>
+           <string/>
           </property>
           <property name="minimum">
            <number>10</number>
@@ -377,7 +313,7 @@ font: 75 11pt &quot;Segoe UI&quot;;
 margin-top: 15px;</string>
         </property>
         <property name="text">
-         <string>PEEP</string>
+         <string>PEEP(cmH2O)</string>
         </property>
        </widget>
       </item>
@@ -399,20 +335,7 @@ font: 75 11pt &quot;Segoe UI&quot;;</string>
            <set>Qt::AlignCenter</set>
           </property>
           <property name="suffix">
-           <string> cmH2O</string>
-          </property>
-          <property name="maximum">
-           <number>10</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDial" name="dial_4">
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>70</height>
-           </size>
+           <string/>
           </property>
           <property name="maximum">
            <number>10</number>
@@ -429,7 +352,7 @@ font: 75 11pt &quot;Segoe UI&quot;;
 margin-top: 15px;</string>
         </property>
         <property name="text">
-         <string>FiO2</string>
+         <string>FiO2(%)</string>
         </property>
        </widget>
       </item>
@@ -451,20 +374,7 @@ font: 75 11pt &quot;Segoe UI&quot;;</string>
            <set>Qt::AlignCenter</set>
           </property>
           <property name="suffix">
-           <string> %</string>
-          </property>
-          <property name="maximum">
-           <number>100</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDial" name="dial_5">
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>70</height>
-           </size>
+           <string/>
           </property>
           <property name="maximum">
            <number>100</number>
@@ -538,198 +448,5 @@ border-radius: 10px;</string>
  <resources>
   <include location="../src/images.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>dial_tidal_volume</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>txt_tidal_volume</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>610</x>
-     <y>82</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>341</x>
-     <y>75</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>txt_tidal_volume</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>dial_tidal_volume</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>295</x>
-     <y>69</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>658</x>
-     <y>91</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>txt_resprate</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>646</x>
-     <y>145</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>343</x>
-     <y>143</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>txt_resprate</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>dial</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>268</x>
-     <y>139</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>643</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>txt_ieratio</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>dial_2</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>305</x>
-     <y>207</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>612</x>
-     <y>222</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dial_2</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>txt_ieratio</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>640</x>
-     <y>234</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>266</x>
-     <y>221</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dial_3</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>txt_peakflow</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>634</x>
-     <y>299</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>361</x>
-     <y>288</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>txt_peakflow</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>dial_3</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>301</x>
-     <y>288</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>592</x>
-     <y>318</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dial_4</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>txt_peep</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>627</x>
-     <y>369</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>506</x>
-     <y>358</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>txt_peep</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>dial_4</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>459</x>
-     <y>361</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>601</x>
-     <y>374</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dial_5</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>txt_fio2</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>628</x>
-     <y>438</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>431</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>txt_fio2</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>dial_5</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>452</x>
-     <y>434</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>606</x>
-     <y>454</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
