@@ -22,6 +22,18 @@ def gui_directory():
 
 def realtime_directory():
     return '/mnt/ramdisk/'
+    
+def pressure_hi_lim_filename():
+    return 'peak_flow.txt'
+    
+def pressure_lo_lim_filename():
+    return 'pressure_lo_lim.txt'    
+    
+def peep_hi_lim_filename():
+    return 'peep.txt' 
+
+def peep_lo_lim_filename():
+    return 'peep_lo_lim.txt'     
 
 def get_red():
     return '255,0,0'
@@ -43,53 +55,53 @@ def get_process_control():
 
 def get_pressure_hi_lim():
     try:
-        f=open(limits_directory()+"get_pressure_hi_lim","r")
+        f=open(limits_directory()+pressure_hi_lim_filename(),"r")
         value=float(f.read())
         f.close()
         return value
     except:
         print("get pressure limit error")
         value=40.0
-        f=open(limits_directory()+"get_pressure_hi_lim","w")
+        f=open(limits_directory()+pressure_hi_lim_filename(),"w")
         f.write("%0.1f" %(value))
         f.close()
         return value
 
 def get_pressure_lo_lim():
     try:
-        f=open(limits_directory()+"get_pressure_hi_lim","r")
+        f=open(limits_directory()+pressure_lo_lim_filename(),"r")
         value=float(f.read())
         f.close()
         return value
     except:
         value=5
-        f=open(limits_directory()+"get_pressure_hi_lim","w")
+        f=open(limits_directory()+pressure_lo_lim_filename(),"w")
         f.write("%0.1f" %(value))
         f.close()
         return value        
 
 def get_peep_hi_lim():
     try:
-        f=open(limits_directory()+"get_peep_hi_lim","r")
+        f=open(limits_directory()+peep_hi_lim_filename(),"r")
         value=float(f.read())
         f.close()
         return value
     except:
         value=10
-        f=open(limits_directory()+"get_peep_hi_lim","w")
+        f=open(limits_directory()+peep_hi_lim_filename(),"w")
         f.write("%0.1f" %(value))
         f.close()
         return value           
 
 def get_peep_lo_lim():
     try:
-        f=open(limits_directory()+"get_peep_lo_lim","r")
+        f=open(limits_directory()+peep_lo_lim_filename(),"r")
         value=float(f.read())
         f.close()
         return value
     except:
         value=1
-        f=open(limits_directory()+"get_peep_lo_lim","w")
+        f=open(limits_directory()+peep_lo_lim_filename(),"w")
         f.write("%0.1f" %(value))
         f.close()
         return value          

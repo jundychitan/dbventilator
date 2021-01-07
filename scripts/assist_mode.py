@@ -7,7 +7,7 @@ import sys
 from timeit import default_timer as timer
 
 file_path="/mnt/ramdisk/inhilation.txt"
-target_value=0.4
+target_value=1.8
 
 def get_value():
 	try:
