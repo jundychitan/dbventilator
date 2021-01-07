@@ -11,8 +11,13 @@ import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
+import RPi.GPIO as GPIO
+
 def limits_directory():
     return '/home/pi/dbventilator/scripts/limits/'
+
+def alt_limits_directory():
+    return '/home/pi/dbventilator/dec-rpi-gui/temp/'    
 
 def working_directory():
     return '/home/pi/dbventilator/scripts/'
@@ -44,6 +49,9 @@ def get_green():
 def get_yellow():
     return '255,255,0'
 
+def get_ac_detect():
+    return 27 #pin 13
+
 def get_process_control():
     try:
         f=open(gui_directory()+"process_control.txt","r")
@@ -55,7 +63,7 @@ def get_process_control():
 
 def get_pressure_hi_lim():
     try:
-        f=open(limits_directory()+pressure_hi_lim_filename(),"r")
+        f=open(alt_limits_directory()+pressure_hi_lim_filename(),"r")
         value=float(f.read())
         f.close()
         return value
@@ -82,7 +90,7 @@ def get_pressure_lo_lim():
 
 def get_peep_hi_lim():
     try:
-        f=open(limits_directory()+peep_hi_lim_filename(),"r")
+        f=open(alt_limits_directory()+peep_hi_lim_filename(),"r")
         value=float(f.read())
         f.close()
         return value
@@ -146,7 +154,6 @@ def get_battery_50pcnt():
         return value     
 
 def get_battery_20pcnt():
-    return value
     try:
         f=open(limits_directory()+"get_battery_20pcnt","r")
         value=float(f.read())
@@ -188,6 +195,11 @@ def main():
     end_exhilation_time = time.time()
     total_exhilation_time = 0
 
+    battery_wait = time.time()
+    ac_wait = time.time()
+    other_alarm = False
+    main_alarm = False
+
     vt = 0
     slpm = 0
     inhilation = 0
@@ -222,7 +234,11 @@ def main():
 
     f = open(realtime_directory()+'max_peep.txt','w')
     f.write("0")
-    f.close()    
+    f.close()  
+
+    #configure GPIO
+    GPIO.setmode(GPIO.BCM)  
+    GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP) #physical pin 13 (uses BCM gpio pin numbering)
 
     while True:
         inhilation=INHILATION.voltage
@@ -253,6 +269,91 @@ def main():
         f = open(realtime_directory()+"battery.txt","w")
         f.write("%1.3f" %(battery))
         f.close()
+
+        if time.time()-battery_wait>5:
+            print("battery: %0.1f" %(battery))
+            battery_wait=time.time()
+            if battery < get_battery_50pcnt() and battery > get_battery_20pcnt():
+                #battery is less than 50%
+                other_alarm = True
+                print("Battery less than 50%")
+                f=open(gui_directory()+'alarm_status.txt','w')
+                f.write("BATT <50%")
+                f.close()  
+
+                f=open(gui_directory()+'alarm_color.txt','w')
+                f.write("%s" %(get_red()))
+                f.close() 
+
+                f = open(realtime_directory()+'beep','w')
+                f.write("1")
+                f.close()
+
+            elif battery < get_battery_20pcnt():
+                #battery is less than 20%
+                other_alarm = True
+                print("battery less than 20%")
+                f=open(gui_directory()+'alarm_status.txt','w')
+                f.write("BATT <20%")
+                f.close()  
+
+                f=open(gui_directory()+'alarm_color.txt','w')
+                f.write("%s" %(get_red()))
+                f.close()    
+
+                f = open(realtime_directory()+'beep','w')
+                f.write("1")
+                f.close()
+
+            else:
+                other_alarm = False
+                if main_alarm == False:
+                    print("Normal")
+                    f=open(gui_directory()+'alarm_status.txt','w')
+                    f.write("NORMAL")
+                    f.close()  
+
+                    f=open(gui_directory()+'alarm_color.txt','w')
+                    f.write("%s" %(get_green()))
+                    f.close()   
+
+                    f = open(realtime_directory()+'beep','w')
+                    f.write("0")
+                    f.close()
+
+        if time.time() - ac_wait > 2:
+            ac_wait = time.time()
+            if GPIO.input(get_ac_detect()) == 0:
+                #ac disconnected
+                other_alarm = True
+                print("AC Loss")
+                f=open(gui_directory()+'alarm_status.txt','w')
+                f.write("AC LOSS")
+                f.close()  
+
+                f=open(gui_directory()+'alarm_color.txt','w')
+                f.write("%s" %(get_red()))
+                f.close()    
+
+                f = open(realtime_directory()+'beep','w')
+                f.write("1")
+                f.close()        
+            else:
+                other_alarm = False
+                if main_alarm == False:
+                    print("Normal")
+                    f=open(gui_directory()+'alarm_status.txt','w')
+                    f.write("NORMAL")
+                    f.close()  
+
+                    f=open(gui_directory()+'alarm_color.txt','w')
+                    f.write("%s" %(get_green()))
+                    f.close()   
+
+                    f = open(realtime_directory()+'beep','w')
+                    f.write("0")
+                    f.close()
+
 
         #read honeywell sensor
         try:
@@ -307,7 +408,6 @@ def main():
                         f.write("%0.1f" %(peep_pressure))
                         f.close()
 
-
                         #print("PEEP: %0.1f" %(peep_pressure))
                         max_pressure = max(pressure_range)
                         max_flow = max(flow_range)
@@ -332,6 +432,7 @@ def main():
 
                         #evaluate peep and pressure limits
                         if max_pressure < get_pressure_lo_lim() and peep_pressure < get_peep_lo_lim():
+                            main_alarm = True
                             print("Circuit Fault Alarm")
                             #set alarm to critical color
                             f=open(gui_directory()+'alarm_color.txt','w')
@@ -348,6 +449,7 @@ def main():
 
                         else: 
                             if max_pressure > get_pressure_hi_lim():
+                                main_alarm = True
                                 print("High Pressure Alarm: %0.1f" %(max_pressure))
                                 f=open(gui_directory()+'alarm_color.txt','w')
                                 f.write("%s" %(get_red()))
@@ -363,6 +465,7 @@ def main():
 
 
                             elif peep_pressure > get_peep_hi_lim():
+                                main_alarm = True
                                 print("Max PEEP Alarm %0.1f" %(peep_pressure))  
                                 f=open(gui_directory()+'alarm_color.txt','w')
                                 f.write("%s" %(get_red()))
@@ -377,6 +480,7 @@ def main():
                                 f.close()
 
                             elif peep_pressure < get_peep_lo_lim():
+                                main_alarm = True
                                 print("Low PEEP Alarm %0.1f" %(peep_pressure))
                                 f=open(gui_directory()+'alarm_color.txt','w')
                                 f.write("%s" %(get_red()))
@@ -391,18 +495,20 @@ def main():
                                 f.close()
 
                             else:
-                                print("Normal")
-                                f=open(gui_directory()+'alarm_color.txt','w')
-                                f.write("%s" %(get_green()))
-                                f.close()   
+                                main_alarm = False
+                                if other_alarm == False:
+                                    print("Normal")
+                                    f=open(gui_directory()+'alarm_color.txt','w')
+                                    f.write("%s" %(get_green()))
+                                    f.close()   
 
-                                f=open(gui_directory()+'alarm_status.txt','w')
-                                f.write("NORMAL")
-                                f.close()  
+                                    f=open(gui_directory()+'alarm_status.txt','w')
+                                    f.write("NORMAL")
+                                    f.close()  
 
-                                f = open(realtime_directory()+'beep','w')
-                                f.write("0")
-                                f.close()                         
+                                    f = open(realtime_directory()+'beep','w')
+                                    f.write("0")
+                                    f.close()                         
 
 
                         # f = open(realtime_directory()+"peep_pressure.txt","w")
