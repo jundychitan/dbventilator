@@ -335,9 +335,9 @@ def main():
                 f.write("%s" %(get_red()))
                 f.close()    
 
-                f = open(realtime_directory()+'beep','w')
-                f.write("1")
-                f.close()        
+                #f = open(realtime_directory()+'beep','w')
+                #f.write("1")
+                #f.close()        
             else:
                 other_alarm = False
                 if main_alarm == False:
@@ -350,9 +350,9 @@ def main():
                     f.write("%s" %(get_green()))
                     f.close()   
 
-                    f = open(realtime_directory()+'beep','w')
-                    f.write("0")
-                    f.close()
+                    #f = open(realtime_directory()+'beep','w')
+                    #f.write("0")
+                    #f.close()
 
 
         #read honeywell sensor

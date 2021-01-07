@@ -31,18 +31,18 @@ class Main(QMainWindow, Ui_MainWindow):
         # Graph Elements
         self.gv_pressure.setLabels(left='Pressure')
         self.gv_pressure.setAntialiasing(True)
-        self.gv_pressure.setRange(yRange=[0,15])
+        self.gv_pressure.setRange(yRange=[0,40])
         self.gv_pressure.setMouseEnabled(x=False, y=False)
         self.gv_pressure
 
         self.gv_flow.setLabels(left='Flow')
         self.gv_flow.setAntialiasing(True)
-        self.gv_flow.setRange(yRange=[0,30])
+        self.gv_flow.setRange(yRange=[0,50])
         self.gv_flow.setMouseEnabled(x=False, y=False)
 
         self.gv_volume.setLabels(left='Volume')
         self.gv_volume.setAntialiasing(True)
-        self.gv_volume.setRange(yRange=[0,800])
+        self.gv_volume.setRange(yRange=[0,700])
         self.gv_volume.setMouseEnabled(x=False, y=False)
 
         self.refresh_display()
