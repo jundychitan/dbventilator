@@ -31,18 +31,18 @@ class Main(QMainWindow, Ui_MainWindow):
         # Graph Elements
         self.gv_pressure.setLabels(left='Pressure')
         self.gv_pressure.setAntialiasing(True)
-        self.gv_pressure.setRange(yRange=[0,40])
+        self.gv_pressure.setRange(yRange=[0,15])
         self.gv_pressure.setMouseEnabled(x=False, y=False)
         self.gv_pressure
 
         self.gv_flow.setLabels(left='Flow')
         self.gv_flow.setAntialiasing(True)
-        self.gv_flow.setRange(yRange=[0,50])
+        self.gv_flow.setRange(yRange=[0,30])
         self.gv_flow.setMouseEnabled(x=False, y=False)
 
         self.gv_volume.setLabels(left='Volume')
         self.gv_volume.setAntialiasing(True)
-        self.gv_volume.setRange(yRange=[0,700])
+        self.gv_volume.setRange(yRange=[0,800])
         self.gv_volume.setMouseEnabled(x=False, y=False)
 
         self.refresh_display()
@@ -77,13 +77,29 @@ class Main(QMainWindow, Ui_MainWindow):
         peak_pressure.start()
         self.process_pool.append(peak_pressure)
 
-        p_plateau = Sensor(self)
-        p_plateau.setup()
-        p_plateau.set_path(env("P_PLATEAU_PATH"))
-        p_plateau.set_recording(False)
-        p_plateau.result_callback.connect(self.p_plateau_listener)
-        p_plateau.start()
-        self.process_pool.append(p_plateau)
+        # p_plateau = Sensor(self)
+        # p_plateau.setup()
+        # p_plateau.set_path(env("P_PLATEAU_PATH"))
+        # p_plateau.set_recording(False)
+        # p_plateau.result_callback.connect(self.p_plateau_listener)
+        # p_plateau.start()
+        # self.process_pool.append(p_plateau)
+
+        power_source_status = Sensor(self)
+        power_source_status.setup()
+        power_source_status.set_path(env("POWER_SOURCE_STATUS"))
+        power_source_status.set_recording(False)
+        power_source_status.result_callback.connect(self.power_source_status_listener)
+        power_source_status.start()
+        self.process_pool.append(power_source_status)
+
+        power_source_status_color = Sensor(self)
+        power_source_status_color.setup()
+        power_source_status_color.set_path(env("POWER_SOURCE_STATUS_COLOR"))
+        power_source_status_color.set_recording(False)
+        power_source_status_color.result_callback.connect(self.power_source_status_color_listener)
+        power_source_status_color.start()
+        self.process_pool.append(power_source_status_color)
 
         th_alarm_color = Sensor(self)
         th_alarm_color.setup()
@@ -245,9 +261,17 @@ class Main(QMainWindow, Ui_MainWindow):
     def peak_pressure_listener(self, reading, other):
         self.lbl_pressure_peak.setText(f'{reading}')
 
+    # @pyqtSlot(object, object)
+    # def p_plateau_listener(self, reading, other):
+    #     self.lbl_p_plateau.setText(reading)
+
     @pyqtSlot(object, object)
-    def p_plateau_listener(self, reading, other):
-        self.lbl_p_plateau.setText(reading)
+    def power_source_status_listener(self, reading, other):
+        self.lbl_power_source.setText(reading)
+
+    @pyqtSlot(object, object)
+    def power_source_status_color_listener(self, reading, other):
+        self.lbl_power_source.setStyleSheet("font: 25 14pt Segoe UI Light bold;\nborder-radius: 5px;\nbackground-color: #E5E5E5;\ncolor: rgb("+reading+");")
 
     @pyqtSlot(object, object)
     def th_alarm_color_listener(self, reading, other):
