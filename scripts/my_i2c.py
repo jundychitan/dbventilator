@@ -38,7 +38,7 @@ def peep_hi_lim_filename():
     return 'peep.txt' 
 
 def peep_lo_lim_filename():
-    return 'peep_lo_lim.txt'     
+    return 'peep.txt'     
 
 def get_red():
     return '255,0,0'
@@ -48,6 +48,9 @@ def get_green():
 
 def get_yellow():
     return '255,255,0'
+    
+def get_black():
+    return '0,0,0'
 
 def get_ac_detect():
     return 27 #pin 13
@@ -92,24 +95,26 @@ def get_peep_hi_lim():
     try:
         f=open(alt_limits_directory()+peep_hi_lim_filename(),"r")
         value=float(f.read())
+        value = value * 1.2
         f.close()
         return value
     except:
         value=10
-        f=open(limits_directory()+peep_hi_lim_filename(),"w")
+        f=open(alt_limits_directory()+peep_hi_lim_filename(),"w")
         f.write("%0.1f" %(value))
         f.close()
         return value           
 
 def get_peep_lo_lim():
     try:
-        f=open(limits_directory()+peep_lo_lim_filename(),"r")
+        f=open(alt_limits_directory()+peep_lo_lim_filename(),"r")
         value=float(f.read())
+        value = value * 0.8
         f.close()
         return value
     except:
         value=1
-        f=open(limits_directory()+peep_lo_lim_filename(),"w")
+        f=open(alt_limits_directory()+peep_lo_lim_filename(),"w")
         f.write("%0.1f" %(value))
         f.close()
         return value          
@@ -198,6 +203,7 @@ def main():
     battery_wait = time.time()
     ac_wait = time.time()
     other_alarm = False
+    batt_alarm = False
     main_alarm = False
 
     vt = 0
@@ -275,29 +281,29 @@ def main():
             battery_wait=time.time()
             if battery < get_battery_50pcnt() and battery > get_battery_20pcnt():
                 #battery is less than 50%
-                other_alarm = True
-                print("Battery less than 50%")
-                f=open(gui_directory()+'alarm_status.txt','w')
+                batt_alarm = True
+                print("battery less than 50%")
+                f=open(gui_directory()+'power_source.txt','w')
                 f.write("BATT <50%")
                 f.close()  
 
-                f=open(gui_directory()+'alarm_color.txt','w')
+                f=open(gui_directory()+'power_source_color.txt','w')
                 f.write("%s" %(get_red()))
-                f.close() 
+                f.close()    
 
                 f = open(realtime_directory()+'beep','w')
-                f.write("1")
+                f.write("5")
                 f.close()
 
             elif battery < get_battery_20pcnt():
                 #battery is less than 20%
-                other_alarm = True
+                batt_alarm = True
                 print("battery less than 20%")
-                f=open(gui_directory()+'alarm_status.txt','w')
+                f=open(gui_directory()+'power_source.txt','w')
                 f.write("BATT <20%")
                 f.close()  
 
-                f=open(gui_directory()+'alarm_color.txt','w')
+                f=open(gui_directory()+'power_source_color.txt','w')
                 f.write("%s" %(get_red()))
                 f.close()    
 
@@ -306,15 +312,15 @@ def main():
                 f.close()
 
             else:
-                other_alarm = False
-                if main_alarm == False:
+                if batt_alarm == True:
+                    batt_alarm = False
                     print("Normal")
-                    f=open(gui_directory()+'alarm_status.txt','w')
-                    f.write("NORMAL")
+                    f=open(gui_directory()+'power_source.txt','w')
+                    f.write("BATTERY")
                     f.close()  
 
-                    f=open(gui_directory()+'alarm_color.txt','w')
-                    f.write("%s" %(get_green()))
+                    f=open(gui_directory()+'power_source_color.txt','w')
+                    f.write("%s" %(get_black()))
                     f.close()   
 
                     f = open(realtime_directory()+'beep','w')
@@ -325,34 +331,34 @@ def main():
             ac_wait = time.time()
             if GPIO.input(get_ac_detect()) == 0:
                 #ac disconnected
-                other_alarm = True
-                print("AC Loss")
-                f=open(gui_directory()+'alarm_status.txt','w')
-                f.write("AC LOSS")
-                f.close()  
-
-                f=open(gui_directory()+'alarm_color.txt','w')
-                f.write("%s" %(get_red()))
-                f.close()    
-
-                #f = open(realtime_directory()+'beep','w')
-                #f.write("1")
-                #f.close()        
-            else:
-                other_alarm = False
-                if main_alarm == False:
-                    print("Normal")
-                    f=open(gui_directory()+'alarm_status.txt','w')
-                    f.write("NORMAL")
+                if batt_alarm == False:
+                    other_alarm = True
+                    print("AC Loss")
+                    f=open(gui_directory()+'power_source.txt','w')
+                    f.write("BATTERY")
                     f.close()  
 
-                    f=open(gui_directory()+'alarm_color.txt','w')
-                    f.write("%s" %(get_green()))
-                    f.close()   
+                    f=open(gui_directory()+'power_source_color.txt','w')
+                    f.write("%s" %(get_black()))
+                    f.close()    
 
                     #f = open(realtime_directory()+'beep','w')
-                    #f.write("0")
-                    #f.close()
+                    #f.write("1")
+                    #f.close()        
+            else:
+                other_alarm = False
+                print("Normal")
+                f=open(gui_directory()+'power_source.txt','w')
+                f.write("NORMAL")
+                f.close()  
+
+                f=open(gui_directory()+'power_source_color.txt','w')
+                f.write("%s" %(get_black()))
+                f.close()   
+
+                #f = open(realtime_directory()+'beep','w')
+                #f.write("0")
+                #f.close()
 
 
         #read honeywell sensor
@@ -387,7 +393,7 @@ def main():
                     inhilation_start = False
                     exhilation_start = False
 
-                vt += ((slpm / 60) / (1 / (sampling_time / 1000.0))) * 1000;
+                vt += (((slpm / 60) / (1 / (sampling_time / 1000.0))) * 1000)*1.5 #scale tidal volume by 50%
                 flow_range = flow_range + (slpm,)
                 volume_range = volume_range + (vt,)
 
@@ -533,6 +539,7 @@ def main():
                 vt = 0
 
             f = open(realtime_directory()+"volume.txt","w")
+            #print (vt)
             f.write("%1.3f" %(vt))
             f.close()
             

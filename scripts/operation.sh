@@ -24,7 +24,9 @@ do
 			percent_tv=100
 		else
 			percent_tv=$((actual_tv*100/$max_tv))
-		fi		
+		fi
+		echo "percent volume " $percent_tv 
+		
 		command=$percent_tv,$(cat $project_dir/$resp_rate_file),$(cat $project_dir/$ie_ratio_file)
 		echo $command
 		echo -e "$command\r" > $serial_port
