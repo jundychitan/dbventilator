@@ -1,2 +1,8 @@
+__pycache__
+.vscode
+docs
+ui/__pycache__
+ui/*old.py
+config.env
 dec-rpi-gui/temp/*
 scripts/limits/*
