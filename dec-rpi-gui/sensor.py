@@ -10,7 +10,7 @@ class Sensor(QThread):
     def run(self):
         
         while not self.stop_flag:
-            time.sleep(0.5) # 500ms
+            time.sleep(0.2) # 500ms
             if self.is_paused:
                 continue
 
