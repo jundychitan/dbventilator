@@ -1,8 +1,8 @@
 #!/bin/bash
 
-BUZZER=0
-gpio mode BUZZER out
-gpio write BUZZER 0
+BUZZER=2
+gpio mode $BUZZER out
+gpio write $BUZZER 0
 if [ ! -f /mnt/ramdisk/beep ]; then
 	echo "0" > /mnt/ramdisk/beep
 fi
@@ -14,14 +14,14 @@ do
 	if [ $sleep_time -gt 0 ]
 	then
 		echo "On"
-		gpio write BUZZER 1
+		gpio write $BUZZER 1
 		sleep 0.1
 		echo "off"
-		gpio write BUZZER 0
+		gpio write $BUZZER 0
 		sleep $sleep_time
 	else
 		echo "no sound"
-		gpio write BUZZER 0
+		gpio write $BUZZER 0
 		sleep 2.5
 	fi
 

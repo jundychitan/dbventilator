@@ -6,7 +6,8 @@ BUZZER=0
 $gpio_com mode BUZZER out
 $gpio_com write BUZZER 0
 
-shutdown_port=0
+shutdown_port=7
+$gpio_com mode $shutdown_port in
 $gpio_com mode $shutdown_port up
 
 port_status=1

@@ -53,7 +53,7 @@ def get_black():
     return '0,0,0'
 
 def get_ac_detect():
-    return 4
+    return 17 #physical pin 7 (uses BCM gpio pin numbering)
 
 def get_process_control():
     try:
@@ -244,7 +244,8 @@ def main():
 
     #configure GPIO
     GPIO.setmode(GPIO.BCM)  
-    GPIO.setup(get_ac_detect(), GPIO.IN, pull_up_down=GPIO.PUD_UP) #physical pin 13 (uses BCM gpio pin numbering)
+    #GPIO.setup(get_ac_detect(), GPIO.IN, pull_up_down=GPIO.PUD_UP) 
+    GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
 
     while True:
         inhilation=INHILATION.voltage
@@ -329,7 +330,8 @@ def main():
 
         if time.time() - ac_wait > 2:
             ac_wait = time.time()
-            if GPIO.input(get_ac_detect()) == 0:
+            #if GPIO.input(get_ac_detect()) == 0:
+            if GPIO.input(17) == 0:    
                 print("ac disconnected")
                 if batt_alarm == False:
                     other_alarm = True
