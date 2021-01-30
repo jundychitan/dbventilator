@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>764</width>
-    <height>525</height>
+    <width>640</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,6 +69,12 @@
        </property>
        <item>
         <widget class="QFrame" name="frame">
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="styleSheet">
           <string notr="true">border-color: rgb(0, 0, 0);</string>
          </property>
@@ -114,80 +120,13 @@ color: rgb(255, 255, 255);</string>
              <number>1</number>
             </property>
             <property name="text">
-             <string>Patient ID:</string>
+             <string>Spiritus Vitae</string>
             </property>
             <property name="scaledContents">
              <bool>false</bool>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lbl_patient_id">
-            <property name="styleSheet">
-             <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;
-background-color: rgb(20, 33, 61);
-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="text">
-             <string>0000</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_2">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(20, 33, 61);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="leftMargin">
-           <number>9</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_2">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;
-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="text">
-             <string>Runtime:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lbl_runtime">
-            <property name="styleSheet">
-             <string notr="true">font: 25 12pt &quot;Segoe UI Light&quot; bold;
-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="text">
-             <string>00d 00h 00s</string>
             </property>
            </widget>
           </item>
@@ -198,7 +137,7 @@ color: rgb(255, 255, 255);</string>
         <widget class="QFrame" name="frame_3">
          <property name="maximumSize">
           <size>
-           <width>120</width>
+           <width>360</width>
            <height>16777215</height>
           </size>
          </property>
@@ -231,7 +170,7 @@ color: rgb(255, 255, 255);</string>
            <widget class="QPushButton" name="btn_run">
             <property name="maximumSize">
              <size>
-              <width>35</width>
+              <width>120</width>
               <height>35</height>
              </size>
             </property>
@@ -250,7 +189,7 @@ background-color: rgb(0, 170, 127);</string>
             </property>
             <property name="iconSize">
              <size>
-              <width>32</width>
+              <width>64</width>
               <height>32</height>
              </size>
             </property>
@@ -269,7 +208,7 @@ background-color: rgb(0, 170, 127);</string>
            <widget class="QPushButton" name="btn_settings">
             <property name="maximumSize">
              <size>
-              <width>35</width>
+              <width>120</width>
               <height>35</height>
              </size>
             </property>
@@ -298,6 +237,32 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pwr_btn">
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../src/img/power.png</normaloff>../src/img/power.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -522,56 +487,6 @@ background-color: #E5E5E5;</string>
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_9">
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">border-radius: 3px;
-background-color: rgb(252, 163, 17);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_9">
-             <item>
-              <widget class="QLabel" name="label_15">
-               <property name="styleSheet">
-                <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
-               </property>
-               <property name="text">
-                <string>P Plateau(cmH2O)</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lbl_p_plateau">
-               <property name="styleSheet">
-                <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
-border-radius: 5px;
-background-color: #E5E5E5;</string>
-               </property>
-               <property name="text">
-                <string>25</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="frame_13">
             <property name="maximumSize">
              <size>
@@ -721,6 +636,56 @@ background-color: #E5E5E5;</string>
             </layout>
            </widget>
           </item>
+          <item>
+           <widget class="QFrame" name="frame_9">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border-radius: 3px;
+background-color: rgb(252, 163, 17);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <item>
+              <widget class="QLabel" name="label_15">
+               <property name="styleSheet">
+                <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
+               </property>
+               <property name="text">
+                <string>Mode</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lbl_mode">
+               <property name="styleSheet">
+                <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
+border-radius: 5px;
+background-color: #E5E5E5;</string>
+               </property>
+               <property name="text">
+                <string>Assist</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -835,7 +800,7 @@ background-color: rgb(252, 163, 17);</string>
              <string notr="true">font: 25 10pt &quot;Segoe UI Light&quot; bold;</string>
             </property>
             <property name="text">
-             <string>Mode</string>
+             <string>Power Source</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -843,14 +808,15 @@ background-color: rgb(252, 163, 17);</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lbl_mode">
+           <widget class="QLabel" name="lbl_power_source">
             <property name="styleSheet">
              <string notr="true">font: 25 14pt &quot;Segoe UI Light&quot; bold;
 border-radius: 5px;
-background-color: #E5E5E5;</string>
+background-color: #E5E5E5;
+color: rgb(0, 255, 0);</string>
             </property>
             <property name="text">
-             <string>Assist</string>
+             <string>AC</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>

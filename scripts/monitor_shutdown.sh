@@ -1,25 +1,19 @@
 #!/bin/bash
+serial_port="/dev/ttyS0"
 
-gpio_com=/usr/bin/gpio
-
-BUZZER=0
-$gpio_com mode BUZZER out
-$gpio_com write BUZZER 0
-
-shutdown_port=7
-$gpio_com mode $shutdown_port in
-$gpio_com mode $shutdown_port up
-
-port_status=1
-
-while [ $port_status -eq 1 ]
-do
-	port_status=$($gpio_com read $shutdown_port)
-	sleep 1
-	echo "power on"
+filename=/home/pi/dbventilator/dec-rpi-gui/temp/power.txt
+while inotifywait -q -e modify $filename >/dev/null; 
+do 
+    echo "filename is changed" 
+    echo "">$filename
+    operation=$(cat /home/pi/dbventilator/dec-rpi-gui/temp/process_control.txt)
+    echo $operation
+    if [ "$operation" == "off" ]; then
+        echo "shutdown"
+        echo -e "0\r" > $serial_port
+        echo -n "assist" >/home/pi/dbventilator/dec-rpi-gui/temp/mode.txt
+        sudo halt
+    else
+        echo "no shutdown"
+    fi
 done
-$gpio_com write BUZZER 1
-echo "Shutdown"
-sudo halt
-
-

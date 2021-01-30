@@ -44,7 +44,7 @@ do
 		echo "Status OFF"
 		echo -e "0\r" > $serial_port	
 		echo "0,255,0" > $project_dir/alarm_color.txt
-		echo "STOPPED" > $project_dir/alarm_status.txt
-		echo "0" > /mnt/ramdisk/beep #silence alarm when stopped
+		echo -n "STOPPED" > $project_dir/alarm_status.txt
+		echo -n "0" > /mnt/ramdisk/beep #silence alarm when stopped
 	fi
 done

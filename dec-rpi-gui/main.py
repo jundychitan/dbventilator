@@ -27,11 +27,12 @@ class Main(QMainWindow, Ui_MainWindow):
         self.showFullScreen()
         self.btn_settings.clicked.connect(self.show_Settings)
         self.btn_run.clicked.connect(self.run_process)
+        self.pwr_btn.clicked.connect(self.run_power)
     
         # Graph Elements
         self.gv_pressure.setLabels(left='Pressure')
         self.gv_pressure.setAntialiasing(True)
-        self.gv_pressure.setRange(yRange=[0,50])
+        self.gv_pressure.setRange(yRange=[0,45])
         self.gv_pressure.setMouseEnabled(x=False, y=False)
         self.gv_pressure
 
@@ -136,6 +137,8 @@ class Main(QMainWindow, Ui_MainWindow):
         self.process_pool.append(th_entry_update)
         
 
+    def run_power(self):
+        with open(env("POWER_CONTROL_PATH"), 'w+') as f: f.write("shutdown")
 
     def run_process(self):
         if self.running==0:
