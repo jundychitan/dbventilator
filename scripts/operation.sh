@@ -35,7 +35,7 @@ do
 		mode=$(cat $project_dir/$mode_file)
 		if [ "$mode" == "assist" ]; then
 			echo "Assist mode"
-			echo -e "1\r" > $serial_port
+			echo -e "2\r" > $serial_port
 		else
 			echo "Control mode"
 			echo -e "2\r" > $serial_port	

@@ -249,9 +249,12 @@ def main():
 
     while True:
         inhilation=INHILATION.voltage
+        #print("inhilation %0.2f" %(inhilation))
         if inhilation<0.5:inhilation=0.5
         inhilation = map_value(inhilation, 0.5, 4.5, -2.0, 2.0)
         inhilation = kpa_cmh2o(inhilation)
+        #print("inhilation %0.2f" %(inhilation))
+
         f = open("/mnt/ramdisk/inhilation.txt","w")
         f.write("%1.3f" %(inhilation))
         f.close()
@@ -410,7 +413,17 @@ def main():
                 if peep_counter == 5:   
                     #peep_counter = 0                 
                     if get_process_control() == "on":      
-                        run_once = False                  
+                        run_once = False   
+
+                        #record the initial assist pressure
+                        start_assist_press = inhilation 
+                        #set limit to 0.5 above the recorded start assist  pressure
+                        start_assist_press = start_assist_press + 0.5
+                        #alt_limits_directory
+                        f = open(realtime_directory()+'assist_pressure.txt', 'w')
+                        f.write("%1.3f" %(start_assist_press))
+                        f.close()
+
                         peep_pressure = pressure
                         f = open(realtime_directory()+'max_peep.txt','w')
                         f.write("%0.1f" %(peep_pressure))

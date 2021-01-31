@@ -38,7 +38,7 @@ class Main(QMainWindow, Ui_MainWindow):
 
         self.gv_flow.setLabels(left='Flow')
         self.gv_flow.setAntialiasing(True)
-        self.gv_flow.setRange(yRange=[0,50])
+        self.gv_flow.setRange(yRange=[-10,50])
         self.gv_flow.setMouseEnabled(x=False, y=False)
 
         self.gv_volume.setLabels(left='Volume')
