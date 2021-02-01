@@ -41,7 +41,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.label = QtWidgets.QLabel(self.frame)
-        self.label.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.label.setMaximumSize(QtCore.QSize(240, 16777215))
         self.label.setStyleSheet("font: 25 12pt \"Segoe UI Light\" bold;\n"
 "background-color: rgb(20, 33, 61);\n"
 "color: rgb(255, 255, 255);")
@@ -63,6 +63,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.btn_run = QtWidgets.QPushButton(self.frame_3)
         self.btn_run.setMaximumSize(QtCore.QSize(120, 35))
+        self.btn_run.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btn_run.setStyleSheet("font: 25 11.5pt \"Segoe UI Light\";\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 15px;\n"
@@ -79,6 +80,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addWidget(self.btn_run)
         self.btn_settings = QtWidgets.QPushButton(self.frame_3)
         self.btn_settings.setMaximumSize(QtCore.QSize(120, 35))
+        self.btn_settings.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btn_settings.setStyleSheet("font: 25 11.5pt \"Segoe UI Light\";\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius: 15px;\n"
@@ -94,6 +96,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.frame_3)
         self.pwr_btn = QtWidgets.QPushButton(self.top_frame)
         self.pwr_btn.setMaximumSize(QtCore.QSize(48, 32))
+        self.pwr_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pwr_btn.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/buttons/img/power.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -403,7 +406,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "SPIRITUS VITAE"))
-        self.label.setText(_translate("MainWindow", "Spiritus Vitae"))
+        self.label.setText(_translate("MainWindow", "Spiritus Vitae Ventilator"))
         self.label_13.setText(_translate("MainWindow", "Peak Pressure(cmH2O)"))
         self.lbl_pressure_peak.setText(_translate("MainWindow", "35"))
         self.label_17.setText(_translate("MainWindow", "PEEP(cmH2O)"))
