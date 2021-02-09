@@ -191,7 +191,7 @@ class Main(QMainWindow, Ui_MainWindow):
 
         with open(env("PEEP_PATH"), 'r') as f: self.form_settingsProperties.txt_peep.setValue(int(f.read()))
 
-        with open(env("FIO2_PATH"), 'r') as f: self.form_settingsProperties.txt_fio2.setValue(int(f.read()))
+        with open(env("FIO2_LIM_PATH"), 'r') as f: self.form_settingsProperties.txt_fio2.setValue(int(f.read()))
         self.window.show()
 
     def set_assist(self):
@@ -226,7 +226,7 @@ class Main(QMainWindow, Ui_MainWindow):
         with open(env("PEEP_PATH"), 'w+') as f: f.write(peep)
 
         fio2 = str(self.form_settingsProperties.txt_fio2.text()).replace(' %', '')
-        with open(env("FIO2_PATH"), 'w') as f: f.write(fio2)
+        with open(env("FIO2_LIM_PATH"), 'w') as f: f.write(fio2)
 
         self.refresh_display()
         self.window.close()

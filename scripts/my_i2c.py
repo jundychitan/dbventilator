@@ -40,6 +40,9 @@ def peep_hi_lim_filename():
 def peep_lo_lim_filename():
     return 'peep.txt'     
 
+def o2_lim_filename():
+    return 'fio2.txt'
+
 def get_red():
     return '255,0,0'
 
@@ -117,7 +120,35 @@ def get_peep_lo_lim():
         f=open(alt_limits_directory()+peep_lo_lim_filename(),"w")
         f.write("%0.1f" %(value))
         f.close()
-        return value          
+        return value    
+
+def get_o2_lo_limit():
+    try:
+        f=open(alt_limits_directory()+o2_lim_filename(),"r")
+        value=float(f.read())
+        value = value * 0.9
+        f.close()
+        return value
+    except:
+        value=16.8
+        f=open(alt_limits_directory()+o2_lim_filename(),"w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value 
+
+def get_o2_hi_limit():
+    try:
+        f=open(alt_limits_directory()+o2_lim_filename(),"r")
+        value=float(f.read())
+        value = value * 1.1
+        f.close()
+        return value
+    except:
+        value=25.2
+        f=open(alt_limits_directory()+o2_lim_filename(),"w")
+        f.write("%0.1f" %(value))
+        f.close()
+        return value                       
     
 def get_volume_hi_lim():
     try:
@@ -269,9 +300,9 @@ def main():
         f.write("%1.3f" %(pressure))
         f.close()
         
-        oxygen=OXYGEN.voltage
+        oxygen=OXYGEN.voltage * 100
         f = open(realtime_directory()+"oxygen.txt","w")
-        f.write("%1.3f" %(oxygen))
+        f.write("%1.1f" %(oxygen))
         f.close()
         
         battery=BATTERY.voltage
@@ -370,6 +401,11 @@ def main():
         try:
             flow = bus.read_byte(flow_address)<<8 | bus.read_byte(flow_address)
             slpm = 50 * ((flow / 16384.0) - 0.1) / 0.8;
+            if slpm>50:
+                slpm=prev_slpm
+            else:
+                prev_slpm=slpm
+
             f = open(realtime_directory()+"flow.txt","w")
             f.write("%1.3f" %(slpm))
             f.close()
@@ -484,7 +520,6 @@ def main():
                                 f.write("1")
                                 f.close()         
 
-
                             elif peep_pressure > get_peep_hi_lim():
                                 main_alarm = True
                                 print("Max PEEP Alarm %0.1f" %(peep_pressure))  
@@ -514,6 +549,41 @@ def main():
                                 f = open(realtime_directory()+'beep','w')
                                 f.write("1")
                                 f.close()
+                        
+                            #evaluate O2 sensor
+                            elif oxygen < get_o2_lo_limit():
+                                #low oxygen
+                                main_alarm = True
+                                print("Low Oxygen")
+                                #set alarm to critical color
+                                f=open(gui_directory()+'alarm_color.txt','w')
+                                f.write("%s" %(get_red()))
+                                f.close()
+
+                                f=open(gui_directory()+'alarm_status.txt','w')
+                                f.write("LOW O2")
+                                f.close()   
+
+                                f = open(realtime_directory()+'beep','w')
+                                f.write("1")
+                                f.close()    
+
+                            elif oxygen > get_o2_hi_limit():
+                                    #high oxygen
+                                    main_alarm = True
+                                    print("High Oxygen")
+                                    #set alarm to critical color
+                                    f=open(gui_directory()+'alarm_color.txt','w')
+                                    f.write("%s" %(get_red()))
+                                    f.close()
+
+                                    f=open(gui_directory()+'alarm_status.txt','w')
+                                    f.write("HIGH O2")
+                                    f.close()   
+
+                                    f = open(realtime_directory()+'beep','w')
+                                    f.write("1")
+                                    f.close()                                
 
                             else:
                                 main_alarm = False
@@ -529,16 +599,8 @@ def main():
 
                                 f = open(realtime_directory()+'beep','w')
                                 f.write("0")
-                                f.close()                         
+                                f.close()                                                              
 
-
-                        # f = open(realtime_directory()+"peep_pressure.txt","w")
-                        # f.write("%0.1f" %(peep_pressure))
-                        # f.close()
-
-                        # f = open(realtime_directory()+"max_pressure.txt","w")
-                        # f.write("%0.1f" %(max_pressure))
-                        # f.close()                    
                     else:
                         if run_once == False:
                             run_once = True
