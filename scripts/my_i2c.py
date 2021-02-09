@@ -202,7 +202,7 @@ def main():
 
     battery_wait = time.time()
     ac_wait = time.time()
-    other_alarm = False
+    #other_alarm = False
     batt_alarm = False
     main_alarm = False
 
@@ -337,7 +337,7 @@ def main():
             if GPIO.input(17) == 0:    
                 print("ac disconnected")
                 if batt_alarm == False:
-                    other_alarm = True
+                    #other_alarm = True
                     print("AC Loss")
                     f=open(gui_directory()+'power_source.txt','w')
                     f.write("BATTERY")
@@ -351,7 +351,7 @@ def main():
                     #f.write("1")
                     #f.close()        
             else:
-                other_alarm = False
+                #other_alarm = False
                 print("Normal")
                 f=open(gui_directory()+'power_source.txt','w')
                 f.write("NORMAL")
@@ -517,19 +517,19 @@ def main():
 
                             else:
                                 main_alarm = False
-                                if other_alarm == False:
-                                    print("Normal")
-                                    f=open(gui_directory()+'alarm_color.txt','w')
-                                    f.write("%s" %(get_green()))
-                                    f.close()   
+                                #if other_alarm == False:
+                                print("Normal")
+                                f=open(gui_directory()+'alarm_color.txt','w')
+                                f.write("%s" %(get_green()))
+                                f.close()   
 
-                                    f=open(gui_directory()+'alarm_status.txt','w')
-                                    f.write("NORMAL")
-                                    f.close()  
+                                f=open(gui_directory()+'alarm_status.txt','w')
+                                f.write("NORMAL")
+                                f.close()  
 
-                                    f = open(realtime_directory()+'beep','w')
-                                    f.write("0")
-                                    f.close()                         
+                                f = open(realtime_directory()+'beep','w')
+                                f.write("0")
+                                f.close()                         
 
 
                         # f = open(realtime_directory()+"peep_pressure.txt","w")
