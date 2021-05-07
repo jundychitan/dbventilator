@@ -157,7 +157,7 @@ class Ui_MainWindow(object):
 "font: 75 11pt \"Segoe UI\";")
         self.txt_peep.setAlignment(QtCore.Qt.AlignCenter)
         self.txt_peep.setSuffix("")
-        self.txt_peep.setMaximum(10)
+        self.txt_peep.setMaximum(20)
         self.txt_peep.setObjectName("txt_peep")
         self.horizontalLayout_6.addWidget(self.txt_peep)
         self.formLayout.setLayout(5, QtWidgets.QFormLayout.FieldRole, self.horizontalLayout_6)

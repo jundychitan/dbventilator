@@ -242,6 +242,7 @@ def main():
     inhilation = 0
     pressure = 0
     oxygen = 0
+    oxygen_array = [21]
     battery = 0
     prev_slpm = 0
     peep_pressure = 0
@@ -301,6 +302,22 @@ def main():
         f.close()
         
         oxygen=OXYGEN.voltage * 100
+        oxygen=map_value(oxygen, 0, 20, 21.0, 100.0)
+        oxygen=map_value(oxygen,21,40,21,100)
+
+        if len(oxygen_array)>100:
+        	oxygen_array.pop(0)
+        	oxygen_array+=[oxygen]
+        else:
+        	oxygen_array+=[oxygen]
+
+        oxygen=(sum(oxygen_array)/len(oxygen_array))
+        if oxygen>100:
+        	oxygen=100.0
+
+        if oxygen<21:
+        	oxygen=21.0
+
         f = open(realtime_directory()+"oxygen.txt","w")
         f.write("%1.1f" %(oxygen))
         f.close()
