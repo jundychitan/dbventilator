@@ -2,7 +2,7 @@
 serial_port="/dev/ttyS0"
 project_dir=/home/pi/dbventilator/dec-rpi-gui/temp
 config_file=process_control.txt
-tidal_volume_file=tidal_volume.txt
+tidal_volume_file=tidal_comp_volume.txt
 resp_rate_file=resp_rate.txt
 ie_ratio_file=ie_ratio.txt 
 mode_file=mode.txt 

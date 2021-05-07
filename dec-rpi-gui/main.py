@@ -211,7 +211,27 @@ class Main(QMainWindow, Ui_MainWindow):
             with open(env("MODE_PATH"), 'w+') as f: f.write("control")
 
         volume = str(self.form_settingsProperties.txt_tidal_volume.text()).replace(' mL', '')
+        #
+        if int(volume) >= 250 and int(volume) <= 299:
+            volume_comp = '300'
+        elif int(volume) >= 300 and int(volume) <= 349:
+                volume_comp = '330'
+        elif int(volume) >= 350 and int(volume) <= 399:
+                volume_comp = '350'
+        elif int(volume) >= 400 and int(volume) <= 449:
+                volume_comp = '380'
+        elif int(volume) >= 450 and int(volume) <= 499:
+                volume_comp = '400'
+        elif int(volume) >= 500 and int(volume) <= 549:
+                volume_comp = '420'
+        elif int(volume) >= 550 and int(volume) <= 599:
+                volume_comp = '445'
+        else:
+                volume_comp = '470'
+
+
         with open(env("TIDAL_PATH"), 'w+') as f: f.write(volume)
+        with open(env("TIDAL_COMP_PATH"), 'w+') as f: f.write(volume_comp)
 
         resp_rate = str(self.form_settingsProperties.txt_resprate.text()).replace(' Bpm', '')
         with open(env("RESP_RATE_PATH"), 'w+') as f: f.write(resp_rate)

@@ -200,7 +200,25 @@ def get_battery_20pcnt():
         f=open(limits_directory()+"get_battery_20pcnt","w")
         f.write("%0.1f" %(value))
         f.close()
-        return value                  
+        return value           
+
+def get_bpm():
+    try:
+        f=open(alt_limits_directory()+"resp_rate.txt", "r")
+        value=int(f.read())
+        f.close()
+        return value
+    except:
+        value=12
+
+def get_tv():
+    try:
+        f=open(alt_limits_directory()+"tidal_volume.txt", "r")
+        value=int(f.read())
+        f.close()
+        return value
+    except:
+        value=600
     
 def map_value(x, in_min, in_max, out_min, out_max):
     return float((x-in_min) * (out_max-out_min) / (in_max-in_min) + out_min)
@@ -238,6 +256,7 @@ def main():
     main_alarm = False
 
     vt = 0
+    vt_total = [0]
     slpm = 0
     inhilation = 0
     pressure = 0
@@ -255,6 +274,13 @@ def main():
     volume_range = tuple()
     channel = 2
     gain = 1	
+
+    bpm = 0
+    prev_bpm = 0
+
+    tidal_volume = 0
+    prev_tidal_volume = 0
+    total_volume = 0
 
     run_once = False
 
@@ -313,7 +339,7 @@ def main():
 
         oxygen=(sum(oxygen_array)/len(oxygen_array))
         if oxygen>100:
-        	oxygen=100.0
+            oxygen=100.0
 
         if oxygen<21:
         	oxygen=21.0
@@ -451,7 +477,7 @@ def main():
                     inhilation_start = False
                     exhilation_start = False
 
-                vt += (((slpm / 60) / (1 / (sampling_time / 1000.0))) * 1000)#*1.5 #scale tidal volume by 50%
+                vt += (((slpm / 60) / (1 / (sampling_time / 1000.0))) * 1000)*1.3 #scale tidal volume by 30%
                 flow_range = flow_range + (slpm,)
                 volume_range = volume_range + (vt,)
 
@@ -463,7 +489,7 @@ def main():
                     total_inhilation_time = time.time() - start_inhilation_time
 
                 peep_counter += 1
-                if peep_counter == 5:   
+                if peep_counter == 10:   
                     #peep_counter = 0                 
                     if get_process_control() == "on":      
                         run_once = False   
@@ -504,6 +530,27 @@ def main():
                         flow_range = tuple()
                         volume_range = tuple()
 
+                        #if any changes is tv and bpm, reset volume array
+                        bpm = get_bpm()
+                        if bpm != prev_bpm:
+                            prev_bpm = bpm
+                            vt_total = []
+
+                        if get_tv() != prev_tidal_volume:
+                            prev_tidal_volume = get_tv()
+                            vt_total = []
+
+                        #compute average volume
+                        if len(vt_total)==bpm:
+                            total_volume = sum(vt_total)/len(vt_total)
+                            print ("Total vol: %0.1f"  %(total_volume) )
+                            vt_total.pop(0)
+                            vt_total += [max_volume]                              
+                        else:
+                            vt_total += [max_volume] 
+                            total_volume = get_tv()                                                 
+
+                        #evaluate alarms here
                         #evaluate peep and pressure limits
                         if max_pressure < get_pressure_lo_lim() and peep_pressure < get_peep_lo_lim():
                             main_alarm = True
@@ -600,8 +647,42 @@ def main():
 
                                     f = open(realtime_directory()+'beep','w')
                                     f.write("1")
-                                    f.close()                                
+                                    f.close()  
 
+
+                            #compare it with set volume
+                            elif(total_volume > get_tv() *1.1):
+                                main_alarm = True
+                                print("High VT")
+                            
+                                f=open(gui_directory()+'alarm_color.txt','w')
+                                f.write("%s" %(get_red()))
+                                f.close()
+
+                                f=open(gui_directory()+'alarm_status.txt','w')
+                                f.write("HIGH VT")
+                                f.close()   
+
+                                f = open(realtime_directory()+'beep','w')
+                                f.write("1")
+                                f.close()                                 
+
+                            elif( total_volume < get_tv() *0.9):
+                                main_alarm = True
+                                print("Low VT")
+
+                                f=open(gui_directory()+'alarm_color.txt','w')
+                                f.write("%s" %(get_red()))
+                                f.close()
+
+                                f=open(gui_directory()+'alarm_status.txt','w')
+                                f.write("LOW VT")
+                                f.close()   
+
+                                f = open(realtime_directory()+'beep','w')
+                                f.write("1")
+                                f.close() 
+                        
                             else:
                                 main_alarm = False
                                 #if other_alarm == False:
@@ -630,7 +711,7 @@ def main():
                             f.write("STOPPED")
                             f.close()                             
 
-                vt = 0
+                vt = 0            
 
             f = open(realtime_directory()+"volume.txt","w")
             #print (vt)
