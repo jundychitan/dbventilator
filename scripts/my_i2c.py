@@ -126,7 +126,7 @@ def get_o2_lo_limit():
     try:
         f=open(alt_limits_directory()+o2_lim_filename(),"r")
         value=float(f.read())
-        value = value * 0.9
+        value =  - 10
         f.close()
         return value
     except:
@@ -140,7 +140,7 @@ def get_o2_hi_limit():
     try:
         f=open(alt_limits_directory()+o2_lim_filename(),"r")
         value=float(f.read())
-        value = value * 1.1
+        value = value + 10
         f.close()
         return value
     except:
@@ -236,7 +236,8 @@ def main():
     
     flow_address=0x49
     bus = smbus.SMBus(1)
-    sampling_time = 0
+    sampling_time = 100
+    prev_sampling_time = 100
     start = time.time()
 
     inhilation_start = False
@@ -355,7 +356,7 @@ def main():
         f.close()
 
         if time.time()-battery_wait>5:
-            print("battery: %0.1f" %(battery))
+            #print("battery: %0.1f" %(battery))
             battery_wait=time.time()
             if battery < get_battery_50pcnt() and battery > get_battery_20pcnt():
                 #battery is less than 50%
@@ -426,7 +427,7 @@ def main():
                     #f.close()        
             else:
                 #other_alarm = False
-                print("Normal")
+                #print("Normal")
                 f=open(gui_directory()+'power_source.txt','w')
                 f.write("NORMAL")
                 f.close()  
@@ -442,6 +443,9 @@ def main():
 
         #read honeywell sensor
         try:
+            sampling_time = (time.time()-start)*1000.0
+            start = time.time()
+
             flow = bus.read_byte(flow_address)<<8 | bus.read_byte(flow_address)
             slpm = 50 * ((flow / 16384.0) - 0.1) / 0.8;
             if slpm>50:
@@ -452,8 +456,7 @@ def main():
             f = open(realtime_directory()+"flow.txt","w")
             f.write("%1.3f" %(slpm))
             f.close()
-            sampling_time = (time.time()-start)*1000.0
-            start = time.time()
+            
             if slpm<0:slpm=0
             if slpm>0:
                 run_once = False
@@ -477,7 +480,13 @@ def main():
                     inhilation_start = False
                     exhilation_start = False
 
+                if (sampling_time < 90):
+                    sampling_time = prev_sampling_time
+                else:
+                    prev_sampling_time = sampling_time
+
                 vt += (((slpm / 60) / (1 / (sampling_time / 1000.0))) * 1000)*1.3 #scale tidal volume by 30%
+                #print (sampling_time)
                 flow_range = flow_range + (slpm,)
                 volume_range = volume_range + (vt,)
 
@@ -543,7 +552,7 @@ def main():
                         #compute average volume
                         if len(vt_total)==bpm:
                             total_volume = sum(vt_total)/len(vt_total)
-                            print ("Total vol: %0.1f"  %(total_volume) )
+                            #print ("Total vol: %0.1f"  %(total_volume) )
                             vt_total.pop(0)
                             vt_total += [max_volume]                              
                         else:
@@ -577,7 +586,7 @@ def main():
                                 f.close()     
 
                                 f=open(gui_directory()+'alarm_status.txt','w')
-                                f.write("HIGH cmH2O")
+                                f.write("HIGH PIP")
                                 f.close()
 
                                 f = open(realtime_directory()+'beep','w')
@@ -686,7 +695,7 @@ def main():
                             else:
                                 main_alarm = False
                                 #if other_alarm == False:
-                                print("Normal")
+                                #print("Normal")
                                 f=open(gui_directory()+'alarm_color.txt','w')
                                 f.write("%s" %(get_green()))
                                 f.close()   
@@ -702,7 +711,7 @@ def main():
                     else:
                         if run_once == False:
                             run_once = True
-                            print("Stopped")
+                            #print("Stopped")
                             f=open(gui_directory()+'alarm_color.txt','w')
                             f.write("%s" %(get_green()))
                             f.close()   
@@ -719,8 +728,8 @@ def main():
             f.close()
             
         except:
-            f = open("error.txt","w")
-            f.write("%1.3f\r\n" %(slpm))
+            f = open("error.txt","a")
+            f.write("%1.1f\r\n" %(sampling_time))
             f.close()
             print("ERROR")
             pass
@@ -728,7 +737,7 @@ def main():
         #print("Values: SLPM: %1.3f, INH %1.3f, PRES %1.3f, OXY %1.3f, BATT %1.3f, VT %1.3f " %(slpm,inhilation,pressure,oxygen,battery, vt))
         #sys.stdout.flush()
         #print("Values: SLPM: %1.3f, INH %1.3f" %(slpm,inhilation))
-        time.sleep(0.1)
+        time.sleep(0.06)
 		
 		
 if __name__ == "__main__":

@@ -213,21 +213,21 @@ class Main(QMainWindow, Ui_MainWindow):
         volume = str(self.form_settingsProperties.txt_tidal_volume.text()).replace(' mL', '')
         #
         if int(volume) >= 250 and int(volume) <= 299:
-            volume_comp = '300'
+            volume_comp = '335' #'300'
         elif int(volume) >= 300 and int(volume) <= 349:
-                volume_comp = '330'
+                volume_comp = '365' #'330'
         elif int(volume) >= 350 and int(volume) <= 399:
-                volume_comp = '350'
+                volume_comp = '385' #'350'
         elif int(volume) >= 400 and int(volume) <= 449:
-                volume_comp = '380'
+                volume_comp = '415' #'380'
         elif int(volume) >= 450 and int(volume) <= 499:
-                volume_comp = '400'
+                volume_comp = '435' #'400'
         elif int(volume) >= 500 and int(volume) <= 549:
-                volume_comp = '420'
+                volume_comp = '455' #'420'
         elif int(volume) >= 550 and int(volume) <= 599:
-                volume_comp = '445'
+                volume_comp = '480' #'445'
         else:
-                volume_comp = '470'
+                volume_comp = '500'
 
 
         with open(env("TIDAL_PATH"), 'w+') as f: f.write(volume)
