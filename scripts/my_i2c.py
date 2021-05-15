@@ -98,7 +98,7 @@ def get_peep_hi_lim():
     try:
         f=open(alt_limits_directory()+peep_hi_lim_filename(),"r")
         value=float(f.read())
-        value = value * 1.2
+        value = value + 2.5
         f.close()
         return value
     except:
@@ -112,7 +112,7 @@ def get_peep_lo_lim():
     try:
         f=open(alt_limits_directory()+peep_lo_lim_filename(),"r")
         value=float(f.read())
-        value = value * 0.8
+        value = value - 2.5
         f.close()
         return value
     except:
@@ -329,8 +329,6 @@ def main():
         f.close()
         
         oxygen=OXYGEN.voltage * 100
-        oxygen=map_value(oxygen, 0, 20, 21.0, 100.0)
-        oxygen=map_value(oxygen,21,40,21,100)
 
         if len(oxygen_array)>100:
         	oxygen_array.pop(0)
@@ -339,6 +337,10 @@ def main():
         	oxygen_array+=[oxygen]
 
         oxygen=(sum(oxygen_array)/len(oxygen_array))
+        #print ("Oxygen %0.2f" %(oxygen))
+
+        oxygen=map_value(oxygen, 0.5, 6.9, 21.0, 100.0)
+        
         if oxygen>100:
             oxygen=100.0
 
@@ -498,7 +500,7 @@ def main():
                     total_inhilation_time = time.time() - start_inhilation_time
 
                 peep_counter += 1
-                if peep_counter == 10:   
+                if peep_counter == 15:   
                     #peep_counter = 0                 
                     if get_process_control() == "on":      
                         run_once = False   
@@ -729,7 +731,7 @@ def main():
             
         except:
             f = open("error.txt","a")
-            f.write("%1.1f\r\n" %(sampling_time))
+            f.write("%1.1f,%1.1f,%1.1f\r\n" %(slpm, vt, sampling_time))
             f.close()
             print("ERROR")
             pass
