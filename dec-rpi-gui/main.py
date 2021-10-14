@@ -213,21 +213,47 @@ class Main(QMainWindow, Ui_MainWindow):
         volume = str(self.form_settingsProperties.txt_tidal_volume.text()).replace(' mL', '')
         #
         if int(volume) >= 250 and int(volume) <= 299:
-            volume_comp = '325' #'300'
+            with open(env("250_PATH"), 'r') as f:
+                volume_comp = f.read()
         elif int(volume) >= 300 and int(volume) <= 349:
-                volume_comp = '355' #'330'
+            with open(env("300_PATH"), 'r') as f:
+                volume_comp = f.read()
         elif int(volume) >= 350 and int(volume) <= 399:
-                volume_comp = '380' #'350'
+            with open(env("350_PATH"), 'r') as f:
+                volume_comp = f.read()
         elif int(volume) >= 400 and int(volume) <= 449:
-                volume_comp = '405' #'380'
+            with open(env("400_PATH"), 'r') as f:
+                volume_comp = f.read()
         elif int(volume) >= 450 and int(volume) <= 499:
-                volume_comp = '430' #'400'
+            with open(env("450_PATH"), 'r') as f:
+                volume_comp = f.read()
         elif int(volume) >= 500 and int(volume) <= 549:
-                volume_comp = '455' #'420'
+            with open(env("500_PATH"), 'r') as f:
+                volume_comp = f.read()
         elif int(volume) >= 550 and int(volume) <= 599:
-                volume_comp = '480' #'445'
+            with open(env("550_PATH"), 'r') as f:
+                volume_comp = f.read()
         else:
-                volume_comp = '500'
+            with open(env("550_PATH"), 'r') as f:
+                volume_comp = f.read()
+
+
+        # if int(volume) >= 250 and int(volume) <= 299:
+        #     volume_comp = '300'
+        # elif int(volume) >= 300 and int(volume) <= 349:
+        #         volume_comp = '330'
+        # elif int(volume) >= 350 and int(volume) <= 399:
+        #         volume_comp = '350'
+        # elif int(volume) >= 400 and int(volume) <= 449:
+        #         volume_comp = '380'
+        # elif int(volume) >= 450 and int(volume) <= 499:
+        #         volume_comp = '400'
+        # elif int(volume) >= 500 and int(volume) <= 549:
+        #         volume_comp = '420'
+        # elif int(volume) >= 550 and int(volume) <= 599:
+        #         volume_comp = '445'
+        # else:
+        #         volume_comp = '470'
 
 
         with open(env("TIDAL_PATH"), 'w+') as f: f.write(volume)
@@ -247,6 +273,11 @@ class Main(QMainWindow, Ui_MainWindow):
 
         fio2 = str(self.form_settingsProperties.txt_fio2.text()).replace(' %', '')
         with open(env("FIO2_LIM_PATH"), 'w') as f: f.write(fio2)
+
+        #send new settings to arduino while operation status is ON
+        with open(env("PROCESS_CONTROL_PATH"), 'r') as f:
+            if f.read()=="on":
+                with open(env("PROCESS_CONTROL_PATH"), 'w+') as f: f.write("on")
 
         self.refresh_display()
         self.window.close()
